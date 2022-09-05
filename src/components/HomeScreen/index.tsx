@@ -8,12 +8,12 @@ import theme from "../../assets/firstScreenImage.png";
 const DM_WIDTH = Dimensions.get("window").width;
 const DM_HEIGHT = Dimensions.get("window").height;
 
-export default function HomeScreen() {
+export default function HomeScreen({ navigation }: any) {
   function checkAge() {
     if (!checked) {
       return alert("Nie ma wstępu!");
     }
-    return alert("Możesz przejść!");
+    return navigation.navigate('Dane');
   }
 
   const [checked, setChecked] = useState(false);
@@ -42,14 +42,17 @@ export default function HomeScreen() {
               Czy masz ukończone 18 lat?
             </Text>
           </View>
+          {/* {!checked && (
+             <Text variant="titleSmall" style={styles.title}>Zaznacz!</Text>
+          )} */}
         </View>
-
         <Button
           textColor="red"
           buttonColor="white"
           icon="sword"
           mode="contained"
           onPress={() => checkAge()}
+          // onPress={() => navigation.navigate('Details')}
         >
           Exploruj!
         </Button>
