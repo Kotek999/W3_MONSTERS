@@ -30,12 +30,12 @@ export default function CardScreen() {
         }}
       />
 
-      <FlipCard
+      {/* <FlipCard
         side={side}
         style={styles.flipContainer}
         front={<CardSide title="FRONT" color="blue" />}
         back={<CardSide title="BACK" color="green" />}
-      />
+      /> */}
     </View>
   )
 
