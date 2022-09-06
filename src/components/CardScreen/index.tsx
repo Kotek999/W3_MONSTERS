@@ -5,40 +5,8 @@ import { View, Text, StyleSheet, Image, ImageBackground, Dimensions, Button } fr
 import temporaryImage from '../../assets/temporaryImage.png';
 // @ts-ignore
 import temporaryImage_Two from '../../assets/temporaryImage_Two.png';
-import FlipCard from 'react-native-flip'
-import CardSide from "../CardSide";
-
 
 export default function CardScreen() {
-
-  const [side, setSide] = useState<0 | 1>(0)
-  const [rotate, setRotate] = useState<"Y" | "X">("Y")
-
-  return (
-    <View style={styles.containerTwo}>
-      <Button
-        title={`Flip the card. The side of the card is: ${side}`}
-        onPress={() => {
-          setSide(side => (side === 0 ? 1 : 0))
-        }}
-      />
-
-      <Button
-        title={`Change rotation. The card rotation is: ${rotate}`}
-        onPress={() => {
-          setRotate(rotation => (rotation === "X" ? "Y" : "X"))
-        }}
-      />
-
-      {/* <FlipCard
-        side={side}
-        style={styles.flipContainer}
-        front={<CardSide title="FRONT" color="blue" />}
-        back={<CardSide title="BACK" color="green" />}
-      /> */}
-    </View>
-  )
-
 
   const CARD_DATA = [
     {
@@ -101,7 +69,7 @@ export default function CardScreen() {
 
   return (
     
-    // <ImageBackground source={randomData.image} style={styles.image}>
+    <ImageBackground source={randomData.image} style={styles.image}>
     <View style={styles.container}>
       <View>
         <Text>Losowa liczba: {randomData.id}</Text>
@@ -113,7 +81,7 @@ export default function CardScreen() {
         
       </View>
     </View>
-    // </ImageBackground>
+   </ImageBackground>
   );
 }
 
@@ -132,17 +100,5 @@ const styles = StyleSheet.create({
     height: DM_HEIGHT,
     justifyContent: "center",
     alignItems: "center",
-  },
-  containerTwo: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "#ecf0f1",
-  },
-  flipContainer: {
-    height: 300,
-    width: 300,
-    borderWidth: 1,
-    borderColor: "red",
   },
 });
