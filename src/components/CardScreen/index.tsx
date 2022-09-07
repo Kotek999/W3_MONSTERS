@@ -1,13 +1,20 @@
 import "react-native-gesture-handler";
 import React, { useEffect, useState } from "react";
-import { View, Text, StyleSheet, Image, ImageBackground, Dimensions, Button } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  Image,
+  ImageBackground,
+  Dimensions,
+} from "react-native";
 // @ts-ignore
-import temporaryImage from '../../assets/temporaryImage.png';
+import temporaryImage from "../../assets/temporaryImage.png";
 // @ts-ignore
-import temporaryImage_Two from '../../assets/temporaryImage_Two.png';
+import temporaryImage_Two from "../../assets/temporaryImage_Two.png";
+import { FAB, Portal, Provider, Modal, Button } from "react-native-paper";
 
-export default function CardScreen() {
-
+export default function CardScreen({ navigation }: any) {
   const CARD_DATA = [
     {
       id: 0,
@@ -63,25 +70,78 @@ export default function CardScreen() {
 
   const [randomData, setRandomData] = useState(() => getCardInfo(CARD_DATA));
 
+  const [state, setState] = React.useState({ open: false });
+
+  const onStateChange = ({ open }: any) => setState({ open });
+
+  const { open } = state;
+
+  const [visible, setVisible] = React.useState(false);
+
+  const showModal = () => setVisible(true);
+  const hideModal = () => setVisible(false);
+  const containerStyle = {
+    backgroundColor: "white",
+    alignItems: "center",
+    justifyContent: "center",
+    width: DM_WIDTH,
+    padding: 20,
+  };
+
   useEffect(() => {
     getCardInfo(CARD_DATA);
   }, []);
 
   return (
-    
     <ImageBackground source={randomData.image} style={styles.image}>
-    <View style={styles.container}>
-      <View>
+      <View style={styles.container}>
         <Text>Losowa liczba: {randomData.id}</Text>
         <Text>Losowy tekst: {randomData.value}</Text>
-       
-          
-          
-       
-        
       </View>
-    </View>
-   </ImageBackground>
+      <Provider>
+        <Portal>
+          <Provider>
+            <Portal>
+              <Modal
+                visible={visible}
+                onDismiss={hideModal}
+                style={styles.modal}
+              >
+                <Text>Example Modal. Click outside this area to dismiss.</Text>
+              </Modal>
+            </Portal>
+          </Provider>
+          <FAB.Group
+            backdropColor="#000000a0"
+            visible
+            open={open}
+            icon={open ? "calendar-today" : "plus"}
+            actions={[
+              { icon: "plus", onPress: () => console.log("Pressed add") },
+              {
+                icon: "star",
+                label: "Star",
+                labelTextColor: "white",
+                onPress: () => console.log("Pressed star"),
+              },
+              {
+                icon: "email",
+                label: "Email",
+                labelTextColor: "white",
+                onPress: () => console.log("Pressed email"),
+              },
+              {
+                icon: "bell",
+                label: "Remind",
+                labelTextColor: "white",
+                onPress: showModal,
+              },
+            ]}
+            onStateChange={onStateChange}
+          />
+        </Portal>
+      </Provider>
+    </ImageBackground>
   );
 }
 
@@ -100,5 +160,11 @@ const styles = StyleSheet.create({
     height: DM_HEIGHT,
     justifyContent: "center",
     alignItems: "center",
+  },
+  modal: {
+    height: "50%",
+    backgroundColor: "white",
+    alignItems: "center",
+    justifyContent: "center",
   },
 });
