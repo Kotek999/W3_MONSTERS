@@ -4,7 +4,6 @@ import {
   View,
   Text,
   StyleSheet,
-  Image,
   ImageBackground,
   Dimensions,
 } from "react-native";
@@ -12,7 +11,19 @@ import {
 import temporaryImage from "../../assets/temporaryImage.png";
 // @ts-ignore
 import temporaryImage_Two from "../../assets/temporaryImage_Two.png";
-import { FAB, Portal, Provider, Modal, Button } from "react-native-paper";
+// @ts-ignore
+import modalBgImage from "../../assets/modalBgImage.png";
+import {
+  FAB,
+  Portal,
+  Provider,
+  Modal,
+  Button,
+  Card,
+  Title,
+  Paragraph,
+  Divider,
+} from "react-native-paper";
 
 export default function CardScreen({ navigation }: any) {
   const CARD_DATA = [
@@ -68,7 +79,7 @@ export default function CardScreen({ navigation }: any) {
     return randomCard;
   };
 
-  const [randomData, setRandomData] = useState(() => getCardInfo(CARD_DATA));
+  const [randomData] = useState(() => getCardInfo(CARD_DATA));
 
   const [state, setState] = React.useState({ open: false });
 
@@ -81,23 +92,23 @@ export default function CardScreen({ navigation }: any) {
   const showModal = () => setVisible(true);
   const hideModal = () => setVisible(false);
   const containerStyle = {
-    backgroundColor: "white",
-    alignItems: "center",
-    justifyContent: "center",
-    width: DM_WIDTH,
-    padding: 20,
+    backgroundColor: "black",
+    height: "60%",
+    width: "100%",
+    top: "25%",
+    borderRadius: 16,
+    padding: 0,
   };
 
   useEffect(() => {
     getCardInfo(CARD_DATA);
   }, []);
 
+  console.log(randomData.id);
+  console.log(randomData.value);
+
   return (
     <ImageBackground source={randomData.image} style={styles.image}>
-      <View style={styles.container}>
-        <Text>Losowa liczba: {randomData.id}</Text>
-        <Text>Losowy tekst: {randomData.value}</Text>
-      </View>
       <Provider>
         <Portal>
           <Provider>
@@ -105,40 +116,114 @@ export default function CardScreen({ navigation }: any) {
               <Modal
                 visible={visible}
                 onDismiss={hideModal}
-                style={styles.modal}
+                // style={styles.modal}
+                contentContainerStyle={containerStyle}
               >
-                <Text>Example Modal. Click outside this area to dismiss.</Text>
+                {/* <View style={styles.container}>
+                  <Text style={{color: "white"}}>Losowa liczba: {randomData.id}</Text>
+                  <Text style={{color: "white"}}>Losowy tekst: {randomData.value}</Text>
+                </View> */}
+                <ImageBackground
+                  borderRadius={16}
+                  source={modalBgImage}
+                  style={{
+                    marginLeft: 8,
+                    marginRight: 8,
+                    padding: 20,
+                    top: 10,
+                    height: DM_HEIGHT / 2,
+                  }}
+                >
+                  <Card
+                    style={{
+                      backgroundColor: "gray",
+                      borderRadius: 16,
+                      height: DM_HEIGHT,
+                    }}
+                  >
+                    <Card.Content
+                      style={{
+                        backgroundColor: "gray",
+                        borderRadius: 16,
+                        flexDirection: "column",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        alignContent: "center",
+                      }}
+                    >
+                      <Title>Potwór:</Title>
+                      <Divider style={styles.divider} />
+                      <Text style={{ top: 10, color: "white" }}>
+                        Losowa liczba: {randomData.id}
+                      </Text>
+                      <Text style={{ top: 10, color: "white" }}>
+                        Losowy tekst: {randomData.value}
+                      </Text>
+                    </Card.Content>
+                  </Card>
+                </ImageBackground>
               </Modal>
             </Portal>
           </Provider>
-          <FAB.Group
-            backdropColor="#000000a0"
-            visible
-            open={open}
-            icon={open ? "calendar-today" : "plus"}
-            actions={[
-              { icon: "plus", onPress: () => console.log("Pressed add") },
-              {
-                icon: "star",
-                label: "Star",
-                labelTextColor: "white",
-                onPress: () => console.log("Pressed star"),
-              },
-              {
-                icon: "email",
-                label: "Email",
-                labelTextColor: "white",
-                onPress: () => console.log("Pressed email"),
-              },
-              {
-                icon: "bell",
-                label: "Remind",
-                labelTextColor: "white",
-                onPress: showModal,
-              },
-            ]}
-            onStateChange={onStateChange}
-          />
+          {!visible ? (
+            <FAB.Group
+              backdropColor="#000000a0"
+              visible
+              open={open}
+              icon={open ? "calendar-today" : "plus"}
+              actions={[
+                { icon: "plus", onPress: () => console.log("Pressed add") },
+                {
+                  icon: "star",
+                  label: "Star",
+                  labelTextColor: "white",
+                  onPress: () => console.log("Pressed star"),
+                },
+                {
+                  icon: "email",
+                  label: "Email",
+                  labelTextColor: "white",
+                  onPress: () => console.log("Pressed email"),
+                },
+                {
+                  icon: "bell",
+                  label: "Remind",
+                  labelTextColor: "white",
+                  onPress: showModal,
+                },
+              ]}
+              onStateChange={onStateChange}
+            />
+          ) : (
+            <FAB.Group
+              backdropColor="#000000a0"
+              visible={false}
+              open={open}
+              icon={open ? "calendar-today" : "plus"}
+              actions={[
+                { icon: "plus", onPress: () => console.log("Pressed add") },
+                {
+                  icon: "star",
+                  label: "Star",
+                  labelTextColor: "white",
+                  onPress: () => console.log("Pressed star"),
+                },
+                {
+                  icon: "email",
+                  label: "Email",
+                  labelTextColor: "white",
+                  onPress: () => console.log("Pressed email"),
+                },
+                {
+                  icon: "bell",
+                  label: "Remind",
+                  labelTextColor: "white",
+                  onPress: showModal,
+                },
+              ]}
+              onStateChange={onStateChange}
+            />
+          )}
         </Portal>
       </Provider>
     </ImageBackground>
@@ -163,8 +248,13 @@ const styles = StyleSheet.create({
   },
   modal: {
     height: "50%",
-    backgroundColor: "white",
+    backgroundColor: "#000000a0",
     alignItems: "center",
     justifyContent: "center",
+  },
+  divider: {
+    backgroundColor: "green",
+    width: "100%",
+    height: 3,
   },
 });

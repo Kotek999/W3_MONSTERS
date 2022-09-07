@@ -9,6 +9,7 @@ const DM_WIDTH = Dimensions.get("window").width;
 const DM_HEIGHT = Dimensions.get("window").height;
 
 export default function HomeScreen({ navigation }: any) {
+
   const [checked, setChecked] = useState(false);
 
   function checkAge() {
