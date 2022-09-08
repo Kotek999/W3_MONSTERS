@@ -3,7 +3,7 @@ import { useState } from "react";
 import { StyleSheet, View, Dimensions, ImageBackground } from "react-native";
 import { Text, Checkbox, Button } from "react-native-paper";
 // @ts-ignore
-import theme from "../../assets/firstScreenImage.png";
+import theme from "../../assets/images/firstScreenImage.png";
 
 const DM_WIDTH = Dimensions.get("window").width;
 const DM_HEIGHT = Dimensions.get("window").height;
@@ -16,7 +16,7 @@ export default function HomeScreen({ navigation }: any) {
     if (!checked) {
       return alert("Nie ma wstępu!");
     }
-    return navigation.navigate("Dane");
+    return navigation.navigate("Swipe");
   }
 
   return (

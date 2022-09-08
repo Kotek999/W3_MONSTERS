@@ -8,11 +8,17 @@ import {
   Dimensions,
 } from "react-native";
 // @ts-ignore
-import temporaryImage from "../../assets/temporaryImage.png";
+import temporaryImage from "../../assets/images/temporaryImage.png";
 // @ts-ignore
-import temporaryImage_Two from "../../assets/temporaryImage_Two.png";
+import temporaryImage_Two from "../../assets/images/temporaryImage_Two.png";
 // @ts-ignore
-import modalBgImage from "../../assets/modalBgImage.png";
+import modalBgImage from "../../assets/images/modalBgImage.png";
+// @ts-ignore
+import modalBgImage_Two from "../../assets/images/modalBgImage_Two.jpg";
+// @ts-ignore
+import modalBgImage_Three from "../../assets/images/modalBgImage_Three.jpg";
+// @ts-ignore
+import monster_GraveHag from "../../assets/monsters/monsterImage_GraveHag.png";
 import {
   FAB,
   Portal,
@@ -30,7 +36,7 @@ export default function CardScreen({ navigation }: any) {
     {
       id: 0,
       value: "idjwiwd",
-      image: temporaryImage_Two,
+      image: monster_GraveHag,
     },
     {
       id: 1,
@@ -92,11 +98,8 @@ export default function CardScreen({ navigation }: any) {
   const showModal = () => setVisible(true);
   const hideModal = () => setVisible(false);
   const containerStyle = {
-    backgroundColor: "black",
-    height: "60%",
     width: "100%",
     top: "25%",
-    borderRadius: 16,
     padding: 0,
   };
 
@@ -125,33 +128,27 @@ export default function CardScreen({ navigation }: any) {
                 </View> */}
                 <ImageBackground
                   borderRadius={16}
-                  source={modalBgImage}
+                  source={modalBgImage_Three}
                   style={{
-                    marginLeft: 8,
-                    marginRight: 8,
                     padding: 20,
-                    top: 10,
+                    top: 0,
                     height: DM_HEIGHT / 2,
                   }}
+                  
                 >
-                  <Card
-                    style={{
-                      backgroundColor: "gray",
-                      borderRadius: 16,
-                      height: DM_HEIGHT,
-                    }}
-                  >
+                  
                     <Card.Content
                       style={{
-                        backgroundColor: "gray",
-                        borderRadius: 16,
+                        width: "80%",
+                        height: "30%",
+                        backgroundColor: "transparent",
                         flexDirection: "column",
                         justifyContent: "center",
-                        alignItems: "center",
+                        alignItems: "flex-start",
                         alignContent: "center",
                       }}
                     >
-                      <Title>Potwór:</Title>
+                      <Title style={{ color: "white" }} >Potwór:</Title>
                       <Divider style={styles.divider} />
                       <Text style={{ top: 10, color: "white" }}>
                         Losowa liczba: {randomData.id}
@@ -160,7 +157,7 @@ export default function CardScreen({ navigation }: any) {
                         Losowy tekst: {randomData.value}
                       </Text>
                     </Card.Content>
-                  </Card>
+                 
                 </ImageBackground>
               </Modal>
             </Portal>
@@ -172,27 +169,27 @@ export default function CardScreen({ navigation }: any) {
               open={open}
               icon={open ? "calendar-today" : "plus"}
               actions={[
-                { icon: "plus", onPress: () => console.log("Pressed add") },
-                {
-                  icon: "star",
-                  label: "Star",
-                  labelTextColor: "white",
-                  onPress: () => console.log("Pressed star"),
-                },
-                {
-                  icon: "email",
-                  label: "Email",
-                  labelTextColor: "white",
-                  onPress: () => console.log("Pressed email"),
-                },
-                {
-                  icon: "bell",
-                  label: "Remind",
-                  labelTextColor: "white",
-                  onPress: showModal,
-                },
+                // { icon: "plus", onPress: () => console.log("Pressed add") },
+                // {
+                //   icon: "star",
+                //   label: "Star",
+                //   labelTextColor: "white",
+                //   onPress: () => console.log("Pressed star"),
+                // },
+                // {
+                //   icon: "email",
+                //   label: "Email",
+                //   labelTextColor: "white",
+                //   onPress: () => console.log("Pressed email"),
+                // },
+                // {
+                //   icon: "bell",
+                //   label: "Remind",
+                //   labelTextColor: "white",
+                //   onPress: showModal,
+                // },
               ]}
-              onStateChange={onStateChange}
+              onStateChange={showModal}
             />
           ) : (
             <FAB.Group
@@ -240,9 +237,10 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   image: {
+    backgroundColor: "black",
     flex: 1,
     width: DM_WIDTH,
-    height: DM_HEIGHT,
+    height: DM_HEIGHT / 1.5,
     justifyContent: "center",
     alignItems: "center",
   },
@@ -253,8 +251,8 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   divider: {
-    backgroundColor: "green",
-    width: "100%",
+    backgroundColor: "yellow",
+    width: "50%",
     height: 3,
   },
 });
