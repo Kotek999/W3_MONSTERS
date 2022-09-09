@@ -31,55 +31,56 @@ import {
   Divider,
 } from "react-native-paper";
 
-export default function CardScreen({ navigation }: any) {
-  const CARD_DATA = [
-    {
-      id: 0,
-      value: "idjwiwd",
-      image: monster_GraveHag,
-    },
-    {
-      id: 1,
-      value: "irgrg",
-      image: temporaryImage,
-    },
-    {
-      id: 2,
-      value: "iregr433",
-      image: temporaryImage_Two,
-    },
-    {
-      id: 3,
-      value: "iegge34w3",
-      image: temporaryImage_Two,
-    },
-    {
-      id: 4,
-      value: "rwwrerwe",
-      image: temporaryImage_Two,
-    },
-    {
-      id: 5,
-      value: "wr4334rr",
-      image: temporaryImage,
-    },
-    {
-      id: 6,
-      value: "wfe332",
-      image: temporaryImage,
-    },
-    {
-      id: 7,
-      value: "wewefwe",
-      image: temporaryImage,
-    },
-    {
-      id: 8,
-      value: "wfeefe",
-      image: temporaryImage,
-    },
-  ];
+export const CARD_DATA = [
+  {
+    id: 0,
+    value: "idjwiwd",
+    image: monster_GraveHag,
+  },
+  {
+    id: 1,
+    value: "irgrg",
+    image: temporaryImage,
+  },
+  {
+    id: 2,
+    value: "iregr433",
+    image: temporaryImage_Two,
+  },
+  {
+    id: 3,
+    value: "iegge34w3",
+    image: temporaryImage_Two,
+  },
+  {
+    id: 4,
+    value: "rwwrerwe",
+    image: temporaryImage_Two,
+  },
+  {
+    id: 5,
+    value: "wr4334rr",
+    image: temporaryImage,
+  },
+  {
+    id: 6,
+    value: "wfe332",
+    image: temporaryImage,
+  },
+  {
+    id: 7,
+    value: "wewefwe",
+    image: temporaryImage,
+  },
+  {
+    id: 8,
+    value: "wfeefe",
+    image: temporaryImage,
+  },
+];
 
+export default function CardScreen({ navigation }: any) {
+  
   const getCardInfo = (array: any) => {
     const randomCard = array[Math.floor(Math.random() * array.length)];
     return randomCard;

@@ -25,10 +25,21 @@ import {
 import temporaryImage_Two from "../../assets/images/temporaryImage_Two.png";
 // @ts-ignore
 import modalBgImage_Three from "../../assets/images/modalBgImage_Three.jpg";
+import { CARD_DATA } from '../CardScreen';
+
 
 const SCREEN_WIDTH = Dimensions.get('window').width;
 
 const SwipeableCard = ({ item, removeCard, swipedDirection } : any) => {
+
+  const getCardInfo = (array: any) => {
+    const randomCard = array[Math.floor(Math.random() * array.length)];
+    return randomCard;
+  };
+
+  const [randomData] = useState(() => getCardInfo(CARD_DATA));
+
+
   // let xPosition = new Animated.Value(0);
   const [xPosition, setXPosition] = useState(new Animated.Value(0));
   let swipeDirection = '';
@@ -106,12 +117,12 @@ const SwipeableCard = ({ item, removeCard, swipedDirection } : any) => {
       style={[
         styles.cardStyle,
         {
-          backgroundColor: "red",
+          backgroundColor: "black",
           opacity: cardOpacity,
           transform: [{ translateX: xPosition }, { rotate: rotateCard }],
         },
       ]}>
-     <ImageBackground source={temporaryImage_Two} style={styles.image}></ImageBackground>
+     <ImageBackground source={randomData.image} style={styles.image}></ImageBackground>
     </Animated.View>
   );
 };
@@ -154,6 +165,7 @@ const SwipeCards = ({navigation}: any) => {
     top: "25%",
     padding: 0,
   };
+  
 
   return (
     <SafeAreaView style={{flex: 1}}>
