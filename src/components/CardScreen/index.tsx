@@ -30,63 +30,28 @@ import {
   Paragraph,
   Divider,
 } from "react-native-paper";
-
-export const CARD_DATA = [
-  {
-    id: 0,
-    value: "idjwiwd",
-    image: monster_GraveHag,
-  },
-  {
-    id: 1,
-    value: "irgrg",
-    image: temporaryImage,
-  },
-  {
-    id: 2,
-    value: "iregr433",
-    image: temporaryImage_Two,
-  },
-  {
-    id: 3,
-    value: "iegge34w3",
-    image: temporaryImage_Two,
-  },
-  {
-    id: 4,
-    value: "rwwrerwe",
-    image: temporaryImage_Two,
-  },
-  {
-    id: 5,
-    value: "wr4334rr",
-    image: temporaryImage,
-  },
-  {
-    id: 6,
-    value: "wfe332",
-    image: temporaryImage,
-  },
-  {
-    id: 7,
-    value: "wewefwe",
-    image: temporaryImage,
-  },
-  {
-    id: 8,
-    value: "wfeefe",
-    image: temporaryImage,
-  },
-];
+import { CARD_DATA } from "../CardData";
 
 export default function CardScreen({ navigation }: any) {
-  
-  const getCardInfo = (array: any) => {
-    const randomCard = array[Math.floor(Math.random() * array.length)];
-    return randomCard;
-  };
 
-  const [randomData] = useState(() => getCardInfo(CARD_DATA));
+
+  const randomCard = CARD_DATA[Math.floor(Math.random() * CARD_DATA.length)]
+
+  const [image, setImage] = useState(randomCard)
+
+   useEffect(() => {() => {
+      const randomCard = CARD_DATA[Math.floor(Math.random() * CARD_DATA.length)]
+      setImage(randomCard)
+    }
+  }, [setImage]);
+
+  
+  // const getCardInfo = (array: any) => {
+  //   const randomCard = array[Math.floor(Math.random() * array.length)];
+  //   return randomCard;
+  // };
+
+  // const [randomData] = useState(() => getCardInfo(CARD_DATA));
 
   const [state, setState] = React.useState({ open: false });
 
@@ -104,15 +69,16 @@ export default function CardScreen({ navigation }: any) {
     padding: 0,
   };
 
-  useEffect(() => {
-    getCardInfo(CARD_DATA);
-  }, []);
+  // useEffect(() => {
+  //   getCardInfo(CARD_DATA);
+  // }, []);
 
-  console.log(randomData.id);
-  console.log(randomData.value);
+  console.log(image.id);
+  console.log(image.value);
 
   return (
-    <ImageBackground source={randomData.image} style={styles.image}>
+    <>
+    {image && <ImageBackground source={image.image} style={styles.image}>
       <Provider>
         <Portal>
           <Provider>
@@ -152,10 +118,10 @@ export default function CardScreen({ navigation }: any) {
                       <Title style={{ color: "white" }} >Potwór:</Title>
                       <Divider style={styles.divider} />
                       <Text style={{ top: 10, color: "white" }}>
-                        Losowa liczba: {randomData.id}
+                        Losowa liczba: {image.id}
                       </Text>
                       <Text style={{ top: 10, color: "white" }}>
-                        Losowy tekst: {randomData.value}
+                        Losowy tekst: {image.value}
                       </Text>
                     </Card.Content>
                  
@@ -224,7 +190,9 @@ export default function CardScreen({ navigation }: any) {
           )}
         </Portal>
       </Provider>
-    </ImageBackground>
+    </ImageBackground>}
+   
+    </>
   );
 }
 

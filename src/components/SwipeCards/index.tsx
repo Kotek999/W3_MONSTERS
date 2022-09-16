@@ -25,20 +25,22 @@ import {
 import temporaryImage_Two from "../../assets/images/temporaryImage_Two.png";
 // @ts-ignore
 import modalBgImage_Three from "../../assets/images/modalBgImage_Three.jpg";
-import { CARD_DATA } from '../CardScreen';
+import { CARD_DATA } from '../CardData';
 
 
 const SCREEN_WIDTH = Dimensions.get('window').width;
 
 const SwipeableCard = ({ item, removeCard, swipedDirection } : any) => {
 
-  const getCardInfo = (array: any) => {
-    const randomCard = array[Math.floor(Math.random() * array.length)];
-    return randomCard;
-  };
+  const randomCard = CARD_DATA[Math.floor(Math.random() * CARD_DATA.length)]
 
-  const [randomData] = useState(() => getCardInfo(CARD_DATA));
+  const [image, setImage] = useState(randomCard)
 
+   useEffect(() => {() => {
+      const randomCard = CARD_DATA[Math.floor(Math.random() * CARD_DATA.length)]
+      setImage(randomCard)
+    }
+  }, [setImage]);
 
   // let xPosition = new Animated.Value(0);
   const [xPosition, setXPosition] = useState(new Animated.Value(0));
@@ -122,7 +124,7 @@ const SwipeableCard = ({ item, removeCard, swipedDirection } : any) => {
           transform: [{ translateX: xPosition }, { rotate: rotateCard }],
         },
       ]}>
-     <ImageBackground source={randomData.image} style={styles.image}></ImageBackground>
+     <ImageBackground source={image.image} style={styles.image}></ImageBackground>
     </Animated.View>
   );
 };
@@ -166,6 +168,17 @@ const SwipeCards = ({navigation}: any) => {
     padding: 0,
   };
   
+  // function loopCard() {
+  //   for(let i=0; i < 20; i++) {
+  //      if(i === 0) {
+  //     return <ImageBackground source={image.image} style={styles.image}></ImageBackground>
+  //      }
+  //      else {
+  //       return <View><Text style={{color: "white"}}>siema</Text></View>
+  //      }
+  //   }
+  //   }
+
 
   return (
     <SafeAreaView style={{flex: 1}}>
