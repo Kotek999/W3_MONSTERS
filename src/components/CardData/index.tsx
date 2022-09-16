@@ -57,4 +57,4 @@ export const CARD_DATA: DataProps[] = [
     value: "wfeefe",
     image: temporaryImage,
   },
-];
+].reverse();
