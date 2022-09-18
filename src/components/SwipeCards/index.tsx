@@ -1,85 +1,76 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, FC } from "react";
 import {
   SafeAreaView,
   StyleSheet,
   View,
   Text,
-  Dimensions,
   Animated,
   PanResponder,
   ImageBackground,
-} from 'react-native';
+} from "react-native";
 import {
-    FAB,
-    Portal,
-    Provider,
-    Modal,
-    Card,
-    Title,
-    Divider,
-    Button,
-    IconButton, 
-    MD3Colors,
-  } from "react-native-paper";
-// @ts-ignore
-import temporaryImage_Two from "../../assets/images/temporaryImage_Two.png";
+  FAB,
+  Portal,
+  Provider,
+  Modal,
+  Card,
+  Title,
+  Divider,
+  IconButton,
+  MD3Colors,
+} from "react-native-paper";
 // @ts-ignore
 import modalBgImage_Three from "../../assets/images/modalBgImage_Three.jpg";
-import { CARD_DATA } from '../CardData';
+import { CARD_DATA } from "../CardData";
+import { DM_WIDTH, DM_HEIGHT } from "../../common/Dimensions";
 
+const SwipeableCard = ({ swipedDirection }: any) => {
+  const randomCard = CARD_DATA[Math.floor(Math.random() * CARD_DATA.length)];
 
-const SCREEN_WIDTH = Dimensions.get('window').width;
+  const [image, setImage] = useState(randomCard);
 
-const SwipeableCard = ({ swipedDirection } : any) => {
-
-  const randomCard = CARD_DATA[Math.floor(Math.random() * CARD_DATA.length)]
-
-  const [image, setImage] = useState(randomCard)
-
-   useEffect(() => {() => {
-      const randomCard = CARD_DATA[Math.floor(Math.random() * CARD_DATA.length)]
-      setImage(randomCard)
-    }
+  useEffect(() => {
+    () => {
+      const randomCard =
+        CARD_DATA[Math.floor(Math.random() * CARD_DATA.length)];
+      setImage(randomCard);
+    };
   }, [setImage]);
 
   const [xPosition] = useState(new Animated.Value(0));
-  let swipeDirection = '';
+  let swipeDirection = "";
   let cardOpacity = new Animated.Value(1);
   let rotateCard = xPosition.interpolate({
-    inputRange: [-150, 0, 150],
-    outputRange: ['-0deg', '0deg', '0deg'],
+    inputRange: [0, 0, 150],
+    outputRange: ["-0deg", "0deg", "0deg"],
   });
 
-
   let panResponder = PanResponder.create({
-    onStartShouldSetPanResponder: () => false,
-    onMoveShouldSetPanResponder: () => true,
-    onStartShouldSetPanResponderCapture: () => false,
     onMoveShouldSetPanResponderCapture: () => true,
     onPanResponderMove: (e, gestureState) => {
       xPosition.setValue(gestureState.dx);
-      if (gestureState.dx > SCREEN_WIDTH - 250) {
-        swipeDirection = 'Right';
-      } else if (gestureState.dx < -SCREEN_WIDTH + 250) {
-        swipeDirection = 'Left';
+      if (gestureState.dx > DM_WIDTH - 250) {
+        swipeDirection = "Right";
+      } else if (gestureState.dx < -DM_WIDTH + 250) {
+        swipeDirection = "Left";
       }
     },
     onPanResponderRelease: (e, gestureState) => {
       if (
-        gestureState.dx < SCREEN_WIDTH - 150 &&
-        gestureState.dx > -SCREEN_WIDTH + 150
+        gestureState.dx < DM_WIDTH - 150 &&
+        gestureState.dx > -DM_WIDTH
       ) {
-        swipedDirection('--');
+        swipedDirection("--");
         Animated.spring(xPosition, {
           toValue: 0,
           speed: 5,
           bounciness: 10,
           useNativeDriver: true,
         }).start();
-      } else if (gestureState.dx > SCREEN_WIDTH - 150) {
+      } else if (gestureState.dx > DM_WIDTH - 150) {
         Animated.parallel([
           Animated.timing(xPosition, {
-            toValue: SCREEN_WIDTH,
+            toValue: DM_WIDTH,
             duration: 200,
             useNativeDriver: true,
           }),
@@ -91,10 +82,10 @@ const SwipeableCard = ({ swipedDirection } : any) => {
         ]).start(() => {
           swipedDirection(swipeDirection);
         });
-      } else if (gestureState.dx < -SCREEN_WIDTH + 150) {
+      } else if (gestureState.dx < -DM_WIDTH + 150) {
         Animated.parallel([
           Animated.timing(xPosition, {
-            toValue: -SCREEN_WIDTH,
+            toValue: -DM_WIDTH,
             duration: 200,
             useNativeDriver: true,
           }),
@@ -111,7 +102,7 @@ const SwipeableCard = ({ swipedDirection } : any) => {
   });
 
   return (
-      <Animated.View
+    <Animated.View
       {...panResponder.panHandlers}
       style={[
         styles.cardStyle,
@@ -120,19 +111,23 @@ const SwipeableCard = ({ swipedDirection } : any) => {
           opacity: cardOpacity,
           transform: [{ translateX: xPosition }, { rotate: rotateCard }],
         },
-      ]}>
-            <ImageBackground source={image.image} style={styles.imageAnimate} borderRadius={20}></ImageBackground>
+      ]}
+    >
+      <ImageBackground
+        source={image.image}
+        style={styles.imageAnimate}
+        borderRadius={20}
+      ></ImageBackground>
     </Animated.View>
   );
 };
 
-const SwipeCards = ({navigation}: any) => {
-
+const SwipeCards = ({ navigation }: any) => {
   const [noMoreCard, setNoMoreCard] = useState(true);
   const [sampleCardArray, setSampleCardArray] = useState(CARD_DATA);
-  const [swipeDirection, setSwipeDirection] = useState('--');
+  const [swipeDirection, setSwipeDirection] = useState("--");
 
-  const removeCard = (id : any) => {
+  const removeCard = (id: any) => {
     // alert(id);
     sampleCardArray.splice(
       sampleCardArray.findIndex((item) => item.id == id),
@@ -147,7 +142,6 @@ const SwipeCards = ({navigation}: any) => {
   const lastSwipedDirection = (swipeDirection: any) => {
     setSwipeDirection(swipeDirection);
   };
-
 
   const [state, setState] = React.useState({ open: false });
 
@@ -165,132 +159,130 @@ const SwipeCards = ({navigation}: any) => {
     padding: 0,
   };
 
-  const randomCard = CARD_DATA[Math.floor(Math.random() * CARD_DATA.length)]
+  const randomCard = CARD_DATA[Math.floor(Math.random() * CARD_DATA.length)];
 
-  const [image, setImage] = useState(randomCard)
+  const [image, setImage] = useState(randomCard);
 
-   useEffect(() => {() => {
-      const randomCard = CARD_DATA[Math.floor(Math.random() * CARD_DATA.length)]
-      setImage(randomCard)
-    }
+  useEffect(() => {
+    () => {
+      const randomCard =
+        CARD_DATA[Math.floor(Math.random() * CARD_DATA.length)];
+      setImage(randomCard);
+    };
   }, [setImage]);
-  
+
   return (
-    <SafeAreaView style={{flex: 1}}>
+    <SafeAreaView style={{ flex: 1, top: 24}}>
       {image && (
-          <View style={styles.image}>
+        <View style={styles.image}>
           {sampleCardArray.map((item, key) => (
-                <SwipeableCard
-                  key={key}
-                  item={item}
-                  removeCard={() => removeCard(item.id)}
-                  swipedDirection={lastSwipedDirection}
-                />
-              ))}
-              {noMoreCard && ( 
-                  <View style={styles.container}>
-                       <IconButton
-                          icon="arrow-left"
-                          iconColor={MD3Colors.error50}
-                          size={34}
-                          onPress={() => navigation.navigate("Home")}
-                        />
-                </View>
-              )}
-            <Provider>
-              
-              <Portal>
-                  
-                <Provider>
-                  
-                  <Portal>
-                      
-                    <Modal
-                      visible={visible}
-                      onDismiss={hideModal}
-                      // style={styles.modal}
-                      contentContainerStyle={containerStyle}
-                    >
-                      <ImageBackground
-                        borderRadius={16}
-                        source={modalBgImage_Three}
-                        style={{
-                          padding: 20,
-                          top: 0,
-                          height: DM_HEIGHT / 2,
-                        }}
-                        
-                      >
-                        
-                          <Card.Content
-                            style={{
-                              width: "80%",
-                              height: "30%",
-                              backgroundColor: "transparent",
-                              flexDirection: "column",
-                              justifyContent: "center",
-                              alignItems: "flex-start",
-                              alignContent: "center",
-                            }}
-                          >
-                            <Title style={{ color: "white" }} >Potwór:</Title>
-                            <Divider style={styles.divider} />
-                            <Text style={{ top: 10, color: "white" }}>
-                              Losowa liczba: 
-                            </Text>
-                            <Text style={{ top: 10, color: "white" }}>
-                              Losowy tekst: 
-                            </Text>
-                          </Card.Content>
-                       
-                      </ImageBackground>
-                    </Modal>
-                  </Portal>
-                </Provider>
-                {!visible ? (
-                  <FAB.Group
-                    backdropColor="#000000a0"
-                    visible
-                    open={open}
-                    icon={open ? "calendar-today" : "plus"}
-                    actions={[
-                      // actions
-                    ]}
-                    onStateChange={showModal}
-                  />
-                ) : (
-                  <FAB.Group
-                    backdropColor="#000000a0"
-                    visible={false}
-                    open={open}
-                    icon={open ? "calendar-today" : "plus"}
-                    actions={[
-                      { icon: "plus", onPress: () => console.log("Pressed add") },
-                      {
-                        icon: "star",
-                        label: "Star",
-                        labelTextColor: "white",
-                        onPress: () => console.log("Pressed star"),
-                      },
-                      {
-                        icon: "email",
-                        label: "Email",
-                        labelTextColor: "white",
-                        onPress: () => console.log("Pressed email"),
-                      },
-                      {
-                        icon: "bell",
-                        label: "Remind",
-                        labelTextColor: "white",
-                        onPress: showModal,
-                      },
-                    ]}
-                    onStateChange={onStateChange}
-                  />
-                )}
-              </Portal>
-            </Provider>
+            <SwipeableCard
+              key={key}
+              item={item}
+              removeCard={() => removeCard(item.id)}
+              swipedDirection={lastSwipedDirection}
+            />
+          ))}
+          {noMoreCard && (
+            <View style={styles.container}>
+              <IconButton
+                icon="arrow-left"
+                iconColor={MD3Colors.error50}
+                size={34}
+                onPress={() => navigation.navigate("Home")}
+              />
             </View>
+          )}
+          <Provider>
+            <Portal>
+              <Provider>
+                <Portal>
+                  <Modal
+                    visible={visible}
+                    onDismiss={hideModal}
+                    // style={styles.modal}
+                    contentContainerStyle={containerStyle}
+                  >
+                    <ImageBackground
+                      borderRadius={16}
+                      source={modalBgImage_Three}
+                      style={{
+                        padding: 20,
+                        top: 0,
+                        height: DM_HEIGHT / 2,
+                      }}
+                    >
+                      <Card.Content
+                        style={{
+                          width: "80%",
+                          height: "30%",
+                          backgroundColor: "transparent",
+                          flexDirection: "column",
+                          justifyContent: "center",
+                          alignItems: "flex-start",
+                          alignContent: "center",
+                        }}
+                      >
+                        <Title style={{ color: "white" }}>Potwór:</Title>
+                        <Divider style={styles.divider} />
+                        <Text style={{ top: 10, color: "white" }}>
+                          Losowa liczba: {image.id}
+                        </Text>
+                        <Text style={{ top: 10, color: "white" }}>
+                          Losowy tekst: {image.value}
+                        </Text>
+                      </Card.Content>
+                    </ImageBackground>
+                  </Modal>
+                </Portal>
+              </Provider>
+              {!visible ? (
+                <FAB.Group
+                  backdropColor="#000000a0"
+                  visible
+                  style={{marginBottom: 24}}
+                  open={open}
+                  icon={open ? "calendar-today" : "plus"}
+                  actions={
+                    [
+                      // actions
+                    ]
+                  }
+                  onStateChange={showModal}
+                />
+              ) : (
+                <FAB.Group
+                  backdropColor="#000000a0"
+                  visible={false}
+                  open={open}
+                  icon={open ? "calendar-today" : "plus"}
+                  actions={[
+                    { icon: "plus", onPress: () => console.log("Pressed add") },
+                    {
+                      icon: "star",
+                      label: "Star",
+                      labelTextColor: "white",
+                      onPress: () => console.log("Pressed star"),
+                    },
+                    {
+                      icon: "email",
+                      label: "Email",
+                      labelTextColor: "white",
+                      onPress: () => console.log("Pressed email"),
+                    },
+                    {
+                      icon: "bell",
+                      label: "Remind",
+                      labelTextColor: "white",
+                      onPress: showModal,
+                    },
+                  ]}
+                  onStateChange={onStateChange}
+                />
+              )}
+            </Portal>
+          </Provider>
+        </View>
       )}
     </SafeAreaView>
   );
@@ -298,58 +290,55 @@ const SwipeCards = ({navigation}: any) => {
 
 export default SwipeCards;
 
-const DM_WIDTH = Dimensions.get("window").width;
-const DM_HEIGHT = Dimensions.get("window").height;
-
 const styles = StyleSheet.create({
   container: {
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
   },
   titleText: {
     fontSize: 22,
-    fontWeight: 'bold',
-    textAlign: 'center',
+    fontWeight: "bold",
+    textAlign: "center",
     paddingVertical: 20,
   },
   cardStyle: {
-    width: '75%',
-    height: '45%',
-    justifyContent: 'center',
-    alignItems: 'center',
-    position: 'absolute',
+    width: "75%",
+    height: "45%",
+    justifyContent: "center",
+    alignItems: "center",
+    position: "absolute",
     borderRadius: 7,
   },
   cardTitleStyle: {
-    color: '#fff',
+    color: "#fff",
     fontSize: 24,
   },
   swipeText: {
     fontSize: 18,
-    textAlign: 'center',
+    textAlign: "center",
   },
   image: {
     backgroundColor: "black",
     flex: 1,
     width: DM_WIDTH,
     height: DM_HEIGHT / 1.5,
-    
-    flexDirection: 'row',
-  flexWrap: 'wrap',
-  justifyContent: 'center',
-  alignItems: 'flex-start',
+
+    flexDirection: "row",
+    flexWrap: "wrap",
+    justifyContent: "center",
+    alignItems: "flex-start",
   },
   imageAnimate: {
     backgroundColor: "black",
     flex: 1,
     width: DM_WIDTH - 50,
     height: DM_HEIGHT / 1.5,
-    
-    flexDirection: 'row',
-  flexWrap: 'wrap',
-  justifyContent: 'center',
-  alignItems: 'flex-start',
-  top: 60,
+
+    flexDirection: "row",
+    flexWrap: "wrap",
+    justifyContent: "center",
+    alignItems: "flex-start",
+    top: 60,
   },
   modal: {
     height: "50%",

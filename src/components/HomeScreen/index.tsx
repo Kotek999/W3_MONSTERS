@@ -1,34 +1,37 @@
 import { StatusBar } from "expo-status-bar";
 import { useState } from "react";
-import { StyleSheet, View, Dimensions, ImageBackground } from "react-native";
+import { StyleSheet, View, ImageBackground, ToastAndroid } from "react-native";
 import { Text, Checkbox, Button } from "react-native-paper";
 // @ts-ignore
 import theme from "../../assets/images/firstScreenImage.png";
+import { DM_WIDTH, DM_HEIGHT } from "../../common/Dimensions";
+import { HOME_DATA } from "./data";
+// @ts-ignore
+import type { NativeStackScreenProps } from "@react-navigation/native-stack";
 
-const DM_WIDTH = Dimensions.get("window").width;
-const DM_HEIGHT = Dimensions.get("window").height;
-
-export default function HomeScreen({ navigation }: any) {
-
+export default function HomeScreen({ navigation }: NativeStackScreenProps) {
   const [checked, setChecked] = useState(false);
 
-  function checkAge() {
-    if (!checked) {
-      return alert("Nie ma wstępu!");
+  const checkAge = () => {
+    if (checked) {
+      return navigation.navigate("Information");
+    } else {
+      ToastAndroid.show("Potwierdź swój wiek!", ToastAndroid.CENTER);
     }
-    return navigation.navigate("Swipe");
-  }
+  };
 
   return (
     <ImageBackground source={theme} style={styles.image}>
       <View style={styles.container}>
-        <Text variant="titleLarge" style={styles.title}>
-          The Witcher 3 - Monsters
-        </Text>
-        {/* <StatusBar style="auto" /> */}
+        <View style={styles.titleContainer}>
+          <Text variant="titleLarge" style={styles.title}>
+            {HOME_DATA[0].title}
+          </Text>
+        </View>
+        <StatusBar style="auto" />
         <View style={styles.headlineContainer}>
           <Text variant="titleSmall" style={styles.title}>
-            Aplikacja wymaga potwierdzenia wieku.
+            {HOME_DATA[0].subTitle}
           </Text>
           <View style={styles.checkContainer}>
             <Checkbox
@@ -40,7 +43,7 @@ export default function HomeScreen({ navigation }: any) {
               }}
             />
             <Text variant="titleSmall" style={styles.title}>
-              Czy masz ukończone 18 lat?
+              {HOME_DATA[0].variantTitle}
             </Text>
           </View>
         </View>
@@ -50,9 +53,8 @@ export default function HomeScreen({ navigation }: any) {
           icon="sword"
           mode="contained"
           onPress={() => checkAge()}
-          // onPress={() => navigation.navigate('Details')}
         >
-          Exploruj!
+          {HOME_DATA[0].buttonTitle}
         </Button>
       </View>
     </ImageBackground>
@@ -61,8 +63,15 @@ export default function HomeScreen({ navigation }: any) {
 
 const styles = StyleSheet.create({
   container: {
-    width: "90%",
-    height: "90%",
+    width: "98%",
+    height: "98%",
+    alignItems: "center",
+    alignContent: "center",
+    justifyContent: "space-around",
+    borderRadius: 20,
+  },
+  titleContainer: {
+    height: "6%",
     backgroundColor: "#000000a0",
     alignItems: "center",
     alignContent: "center",
@@ -70,11 +79,14 @@ const styles = StyleSheet.create({
     borderRadius: 20,
   },
   headlineContainer: {
+    height: "12%",
     marginLeft: 20,
     marginRight: 20,
     justifyContent: "center",
-    alignItems: "flex-start",
+    alignItems: "center",
     alignContent: "center",
+    backgroundColor: "#000000a0",
+    borderRadius: 20,
   },
   checkContainer: {
     flexDirection: "row",
@@ -90,6 +102,7 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   image: {
+    top: 24,
     flex: 1,
     width: DM_WIDTH,
     height: DM_HEIGHT,

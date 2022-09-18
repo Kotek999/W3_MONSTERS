@@ -14,47 +14,47 @@ interface DataProps {
 export const CARD_DATA: DataProps[] = [
   {
     id: 0,
-    value: "idjwiwd",
+    value: "Potwór 1",
     image: monster_GraveHag,
   },
   {
     id: 1,
-    value: "irgrg",
+    value: "Potwór 2",
     image: temporaryImage,
   },
   {
     id: 2,
-    value: "iregr433",
+    value: "Potwór 3",
     image: temporaryImage_Two,
   },
   {
     id: 3,
-    value: "iegge34w3",
+    value: "Potwór 4",
     image: temporaryImage_Two,
   },
   {
     id: 4,
-    value: "rwwrerwe",
+    value: "Potwór 5",
     image: temporaryImage_Two,
   },
   {
     id: 5,
-    value: "wr4334rr",
+    value: "Potwór 6",
     image: temporaryImage,
   },
   {
     id: 6,
-    value: "wfe332",
+    value: "Potwór 7",
     image: temporaryImage,
   },
   {
     id: 7,
-    value: "wewefwe",
+    value: "Potwór 8",
     image: temporaryImage,
   },
   {
     id: 8,
-    value: "wfeefe",
+    value: "Potwór 9",
     image: temporaryImage,
   },
 ].reverse();
