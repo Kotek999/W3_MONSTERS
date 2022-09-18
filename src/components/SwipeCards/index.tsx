@@ -24,7 +24,7 @@ import modalBgImage_Three from "../../assets/images/modalBgImage_Three.jpg";
 import { CARD_DATA } from "../CardData";
 import { DM_WIDTH, DM_HEIGHT } from "../../common/Dimensions";
 
-const SwipeableCard = ({ swipedDirection }: any) => {
+const SwipeableCard = ({ swipedDirection, navigation }: any) => {
   const randomCard = CARD_DATA[Math.floor(Math.random() * CARD_DATA.length)];
 
   const [image, setImage] = useState(randomCard);
@@ -38,7 +38,8 @@ const SwipeableCard = ({ swipedDirection }: any) => {
   }, [setImage]);
 
   const [xPosition] = useState(new Animated.Value(0));
-  let swipeDirection = "";
+  let swipeDirectionRight = "";
+  let swipeDirectionLeft = "";
   let cardOpacity = new Animated.Value(1);
   let rotateCard = xPosition.interpolate({
     inputRange: [0, 0, 150],
@@ -50,17 +51,16 @@ const SwipeableCard = ({ swipedDirection }: any) => {
     onPanResponderMove: (e, gestureState) => {
       xPosition.setValue(gestureState.dx);
       if (gestureState.dx > DM_WIDTH - 250) {
-        swipeDirection = "Right";
-      } else if (gestureState.dx < -DM_WIDTH + 250) {
-        swipeDirection = "Left";
-      }
+        swipeDirectionRight = "Right";
+        swipeDirectionLeft = "Left";
+      } 
     },
     onPanResponderRelease: (e, gestureState) => {
       if (
         gestureState.dx < DM_WIDTH - 150 &&
-        gestureState.dx > -DM_WIDTH
+        gestureState.dx > -DM_WIDTH + 150
       ) {
-        swipedDirection("--");
+        swipedDirection(swipeDirectionLeft);
         Animated.spring(xPosition, {
           toValue: 0,
           speed: 5,
@@ -80,7 +80,7 @@ const SwipeableCard = ({ swipedDirection }: any) => {
             useNativeDriver: true,
           }),
         ]).start(() => {
-          swipedDirection(swipeDirection);
+          swipedDirection(swipeDirectionRight);
         });
       } else if (gestureState.dx < -DM_WIDTH + 150) {
         Animated.parallel([
@@ -95,11 +95,47 @@ const SwipeableCard = ({ swipedDirection }: any) => {
             useNativeDriver: true,
           }),
         ]).start(() => {
-          swipedDirection(swipeDirection);
+          swipedDirection(swipeDirectionRight);
         });
       }
     },
   });
+
+  const [noMoreCard, setNoMoreCard] = useState(true);
+  const [sampleCardArray, setSampleCardArray] = useState(CARD_DATA);
+  const [swipeDirection, setSwipeDirection] = useState("--");
+
+  const removeCard = (id: any) => {
+    // alert(id);
+    sampleCardArray.splice(
+      sampleCardArray.findIndex((item) => item.id == id),
+      1
+    );
+    setSampleCardArray(sampleCardArray);
+    if (sampleCardArray.length == 0) {
+      setNoMoreCard(false);
+    }
+  };
+
+  const lastSwipedDirection = (swipeDirection: any) => {
+    setSwipeDirection(swipeDirection);
+  };
+
+  const [state, setState] = React.useState({ open: false });
+
+  const onStateChange = ({ open }: any) => setState({ open });
+
+  const { open } = state;
+
+  const [visible, setVisible] = React.useState(false);
+
+  const showModal = () => setVisible(true);
+  const hideModal = () => setVisible(false);
+  const containerStyle = {
+    width: "100%",
+    top: "25%",
+    padding: 0,
+  };
 
   return (
     <Animated.View
@@ -107,8 +143,7 @@ const SwipeableCard = ({ swipedDirection }: any) => {
       style={[
         styles.cardStyle,
         {
-          backgroundColor: "black",
-          opacity: cardOpacity,
+          
           transform: [{ translateX: xPosition }, { rotate: rotateCard }],
         },
       ]}
@@ -118,7 +153,98 @@ const SwipeableCard = ({ swipedDirection }: any) => {
         style={styles.imageAnimate}
         borderRadius={20}
       ></ImageBackground>
-    </Animated.View>
+      {/* <View style={styles.imageModal}>
+    <Provider>
+          <Portal>
+            <Provider>
+              <Portal>
+                <Modal
+                  visible={visible}
+                  onDismiss={hideModal}
+                  // style={styles.modal}
+                  contentContainerStyle={containerStyle}
+                >
+                  <ImageBackground
+                    borderRadius={16}
+                    source={modalBgImage_Three}
+                    style={{
+                      padding: 20,
+                      top: 0,
+                      height: DM_HEIGHT / 2,
+                    }}
+                  >
+                    <Card.Content
+                      style={{
+                        width: "80%",
+                        height: "30%",
+                        backgroundColor: "transparent",
+                        flexDirection: "column",
+                        justifyContent: "center",
+                        alignItems: "flex-start",
+                        alignContent: "center",
+                      }}
+                    >
+                      <Title style={{ color: "white" }}>Potwór:</Title>
+                      <Divider style={styles.divider} />
+                      <Text style={{ top: 10, color: "white" }}>
+                        Losowa liczba: {image.id}
+                      </Text>
+                      <Text style={{ top: 10, color: "white" }}>
+                        Losowy tekst: {image.value}
+                      </Text>
+                    </Card.Content>
+                  </ImageBackground>
+                </Modal>
+              </Portal>
+            </Provider>
+            {!visible ? (
+              <FAB.Group
+                backdropColor="#000000a0"
+                visible
+                style={{marginBottom: 24}}
+                open={open}
+                icon={open ? "calendar-today" : "plus"}
+                actions={
+                  [
+                    // actions
+                  ]
+                }
+                onStateChange={showModal}
+              />
+            ) : (
+              <FAB.Group
+                backdropColor="#000000a0"
+                visible={false}
+                open={open}
+                icon={open ? "calendar-today" : "plus"}
+                actions={[
+                  { icon: "plus", onPress: () => console.log("Pressed add") },
+                  {
+                    icon: "star",
+                    label: "Star",
+                    labelTextColor: "white",
+                    onPress: () => console.log("Pressed star"),
+                  },
+                  {
+                    icon: "email",
+                    label: "Email",
+                    labelTextColor: "white",
+                    onPress: () => console.log("Pressed email"),
+                  },
+                  {
+                    icon: "bell",
+                    label: "Remind",
+                    labelTextColor: "white",
+                    onPress: showModal,
+                  },
+                ]}
+                onStateChange={onStateChange}
+              />
+            )}
+          </Portal>
+        </Provider>
+        </View> */}
+        </Animated.View>
   );
 };
 
@@ -172,7 +298,7 @@ const SwipeCards = ({ navigation }: any) => {
   }, [setImage]);
 
   return (
-    <SafeAreaView style={{ flex: 1, top: 24}}>
+    <SafeAreaView style={{ flex: 1 }}>
       {image && (
         <View style={styles.image}>
           {sampleCardArray.map((item, key) => (
@@ -184,7 +310,7 @@ const SwipeCards = ({ navigation }: any) => {
             />
           ))}
           {noMoreCard && (
-            <View style={styles.container}>
+            <View style={styles.containerArrow}>
               <IconButton
                 icon="arrow-left"
                 iconColor={MD3Colors.error50}
@@ -193,6 +319,16 @@ const SwipeCards = ({ navigation }: any) => {
               />
             </View>
           )}
+          {/* {noMoreCard && (
+            <View style={styles.container}>
+              <IconButton
+                icon="arrow-left"
+                iconColor={MD3Colors.error50}
+                size={34}
+                onPress={() => navigation.navigate("Home")}
+              />
+            </View>
+          )} */}
           <Provider>
             <Portal>
               <Provider>
@@ -295,12 +431,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
-  titleText: {
-    fontSize: 22,
-    fontWeight: "bold",
-    textAlign: "center",
-    paddingVertical: 20,
-  },
   cardStyle: {
     width: "75%",
     height: "45%",
@@ -322,23 +452,36 @@ const styles = StyleSheet.create({
     flex: 1,
     width: DM_WIDTH,
     height: DM_HEIGHT / 1.5,
-
     flexDirection: "row",
     flexWrap: "wrap",
     justifyContent: "center",
     alignItems: "flex-start",
+  },
+  imageModal: {
+      width: DM_WIDTH,
+      height: DM_HEIGHT,
+      flexDirection: "row",
+      flexWrap: "wrap",
+      justifyContent: "center",
+      alignItems: "flex-start",
+      top: "60%",
+  },
+  containerArrow: {
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+    alignContent: 'center',
   },
   imageAnimate: {
     backgroundColor: "black",
     flex: 1,
     width: DM_WIDTH - 50,
     height: DM_HEIGHT / 1.5,
-
     flexDirection: "row",
     flexWrap: "wrap",
     justifyContent: "center",
     alignItems: "flex-start",
-    top: 60,
+    top: "20%",
   },
   modal: {
     height: "50%",

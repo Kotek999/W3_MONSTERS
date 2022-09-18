@@ -28,7 +28,7 @@ export default function HomeScreen({ navigation }: NativeStackScreenProps) {
             {HOME_DATA[0].title}
           </Text>
         </View>
-        <StatusBar style="auto" />
+        {/* <StatusBar style="auto" /> */}
         <View style={styles.headlineContainer}>
           <Text variant="titleSmall" style={styles.title}>
             {HOME_DATA[0].subTitle}
@@ -102,7 +102,6 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   image: {
-    top: 24,
     flex: 1,
     width: DM_WIDTH,
     height: DM_HEIGHT,
