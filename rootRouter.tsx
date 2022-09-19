@@ -4,6 +4,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import HomeScreen from "./src/components/HomeScreen";
 import SwipeCards from "./src/components/SwipeCards";
+import CardFlip from "./src/components/CardFlip";
 
 const RootStack = createStackNavigator();
 
@@ -22,6 +23,13 @@ export default function App() {
         <RootStack.Screen
           name="Information"
           component={SwipeCards}
+          options={{
+            headerShown: false,
+          }}
+        />
+        <RootStack.Screen
+          name="CardFlip"
+          component={CardFlip}
           options={{
             headerShown: false,
           }}
