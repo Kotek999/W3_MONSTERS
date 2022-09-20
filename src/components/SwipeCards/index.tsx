@@ -18,15 +18,19 @@ import {
   Divider,
   IconButton,
   MD3Colors,
-  Button,
-  TouchableRipple,
 } from "react-native-paper";
 // @ts-ignore
 import modalBgImage_Three from "../../assets/images/modalBgImage_Three.jpg";
 import { CARD_DATA } from "../CardData";
-import { DM_WIDTH, DM_HEIGHT } from "../../common/Dimensions";
+import {
+  DM_WIDTH,
+  DM_HEIGHT,
+  DM_WIDTH_MARGIN,
+  DM_HEIGHT_MARGIN,
+} from "../../common/Dimensions";
 import ModalData from "../../helpers/getModalData";
 import { useNavigation } from "@react-navigation/native";
+import CardFlip from "../CardFlip";
 
 const SwipeableCard = ({ swipedDirection }: any) => {
   const randomCard = CARD_DATA[Math.floor(Math.random() * CARD_DATA.length)];
@@ -120,19 +124,7 @@ const SwipeableCard = ({ swipedDirection }: any) => {
         },
       ]}
     >
-      <ImageBackground
-        source={image.image}
-        style={styles.imageAnimate}
-        borderRadius={20}
-      ></ImageBackground>
-      <TouchableRipple
-        disabled={false}
-        onPress={() => navigation.navigate("CardFlip")}
-        rippleColor="red"
-        style={styles.imageAnimateButton}
-      >
-        <Text></Text>
-      </TouchableRipple>
+      <CardFlip />
     </Animated.View>
   );
 };
@@ -312,7 +304,7 @@ const styles = StyleSheet.create({
     backgroundColor: "black",
     flex: 1,
     width: DM_WIDTH,
-    height: DM_HEIGHT / 1.5,
+    height: DM_HEIGHT_MARGIN,
     flexDirection: "row",
     flexWrap: "wrap",
     justifyContent: "center",
@@ -327,8 +319,8 @@ const styles = StyleSheet.create({
   imageAnimate: {
     backgroundColor: "black",
     flex: 1,
-    width: DM_WIDTH - 50,
-    height: DM_HEIGHT / 1.5,
+    width: DM_WIDTH_MARGIN,
+    height: DM_HEIGHT_MARGIN,
     flexDirection: "row",
     flexWrap: "wrap",
     justifyContent: "center",
@@ -337,8 +329,8 @@ const styles = StyleSheet.create({
   },
   imageAnimateButton: {
     backgroundColor: "transparent",
-    width: DM_WIDTH - 50,
-    height: DM_HEIGHT / 1.5,
+    width: DM_WIDTH_MARGIN,
+    height: DM_HEIGHT_MARGIN,
     flexDirection: "row",
     flexWrap: "wrap",
     justifyContent: "center",

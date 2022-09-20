@@ -1,11 +1,26 @@
-import React, { useState, useEffect, FC } from "react";
-import { SafeAreaView, StyleSheet, View, Text } from "react-native";
-import { IconButton, MD3Colors, Button, Snackbar } from "react-native-paper";
+import React, { useState, useEffect } from "react";
+import {
+  SafeAreaView,
+  StyleSheet,
+  View,
+  Text,
+  ImageBackground,
+} from "react-native";
+import {
+  Snackbar,
+  TouchableRipple,
+  IconButton,
+  MD3Colors,
+} from "react-native-paper";
 import { CARD_DATA } from "../CardData";
-import { DM_WIDTH, DM_HEIGHT } from "../../common/Dimensions";
+import {
+  DM_WIDTH,
+  DM_WIDTH_MARGIN,
+  DM_HEIGHT_MARGIN,
+} from "../../common/Dimensions";
 import ModalData from "../../helpers/getModalData";
 
-const CardFlip = ({ navigation }: any) => {
+const CardFlip = () => {
   const randomCard = CARD_DATA[Math.floor(Math.random() * CARD_DATA.length)];
 
   const [image, setImage] = useState(randomCard);
@@ -18,44 +33,51 @@ const CardFlip = ({ navigation }: any) => {
     };
   }, [setImage]);
 
+  const [refresh, setRefresh] = React.useState(false);
 
-  const [visible, setVisible] = React.useState(false);
+  const onPressArea = () => setRefresh(!refresh);
 
-  const onToggleSnackBar = () => setVisible(!visible);
-
-  const onDismissSnackBar = () => setVisible(false);
-
+  const onAnPressArea = () => setRefresh(false);
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
-      <View style={styles.image}>
-        <View style={styles.containerArrow}>
-          <IconButton
-            icon="arrow-left"
-            iconColor={MD3Colors.error50}
-            size={34}
-            onPress={() => navigation.navigate("Home")}
-          />
-        </View>
-        <View style={styles.imageAnimate}>
-          <Text style={{ color: "red", fontSize: 24 }}></Text>
-          <Text style={{ color: "red", fontSize: 24 }}></Text>
-          <Button onPress={onToggleSnackBar}>{visible ? 'Hide' : 'Show'}</Button>
-      <Snackbar
-        style={styles.imageAnimateSnack}
-        visible={visible}
-        onDismiss={onDismissSnackBar}
-        duration={Infinity}
-        action={{
-          label: 'Undo',
-          onPress: () => {
-            navigation.navigate("Information")
-          },
-        }}>
-       <ModalData />
-      </Snackbar>
-      <Button onPress={onToggleSnackBar}>{visible ? 'Hide' : null}</Button>
-        </View>
+      <View style={styles.imageContainer}>
+        <ImageBackground
+          source={image.image}
+          style={styles.image}
+          borderRadius={20}
+        >
+          <TouchableRipple
+            disabled={false}
+            onPress={onPressArea}
+            rippleColor="transparent"
+            style={styles.imagePressableArea}
+          >
+            <Text></Text>
+          </TouchableRipple>
+          <Snackbar
+            style={styles.imageFlipedCard}
+            visible={refresh}
+            onDismiss={onAnPressArea}
+            duration={Infinity}
+            action={{
+              label: "",
+            }}
+          >
+            <ModalData />
+          </Snackbar>
+          {refresh && (
+            <View style={styles.refreshContainer}>
+              <Text style={styles.refreshTitle}>Odśwież</Text>
+              <IconButton
+                icon="refresh"
+                iconColor={MD3Colors.error50}
+                size={34}
+                onPress={onPressArea}
+              />
+            </View>
+          )}
+        </ImageBackground>
       </View>
     </SafeAreaView>
   );
@@ -64,44 +86,51 @@ const CardFlip = ({ navigation }: any) => {
 export default CardFlip;
 
 const styles = StyleSheet.create({
-  image: {
-    backgroundColor: "black",
+  imageContainer: {
     flex: 1,
     width: DM_WIDTH,
-    height: DM_HEIGHT / 1.5,
+    height: DM_HEIGHT_MARGIN,
     flexDirection: "row",
     flexWrap: "wrap",
     justifyContent: "center",
     alignItems: "flex-start",
   },
-  containerArrow: {
-    flex: 1,
-    flexDirection: "row",
-    alignItems: "flex-start",
-    alignContent: "center",
-  },
-  imageAnimate: {
-    backgroundColor: "green",
-    width: DM_WIDTH - 50,
-    height: DM_HEIGHT / 1.5,
+  image: {
+    width: DM_WIDTH_MARGIN,
+    height: DM_HEIGHT_MARGIN,
     flexDirection: "row",
     flexWrap: "wrap",
     justifyContent: "center",
     alignItems: "flex-start",
     borderRadius: 20,
-    top: "10%",
-    margin: "6.5%",
+    marginTop: "20%",
   },
-  imageAnimateSnack: {
+  imagePressableArea: {
+    backgroundColor: "transparent",
+    width: DM_WIDTH_MARGIN,
+    height: DM_HEIGHT_MARGIN,
+    flexDirection: "row",
+    flexWrap: "wrap",
+    justifyContent: "center",
+    alignItems: "flex-start",
+  },
+  imageFlipedCard: {
     backgroundColor: "gray",
-    width: DM_WIDTH - 50,
-    height: DM_HEIGHT / 1.5,
+    width: DM_WIDTH_MARGIN,
+    height: DM_HEIGHT_MARGIN,
     flexDirection: "row",
     flexWrap: "wrap",
     justifyContent: "center",
     alignItems: "flex-start",
     borderRadius: 20,
-    top: "0%",
     margin: "0%",
-  }
+  },
+  refreshContainer: {
+    flexDirection: "row",
+  },
+  refreshTitle: {
+    marginTop: 16,
+    color: "cyan",
+    fontSize: 20,
+  },
 });

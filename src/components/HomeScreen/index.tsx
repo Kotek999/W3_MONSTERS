@@ -25,13 +25,13 @@ export default function HomeScreen({ navigation }: NativeStackScreenProps) {
       <View style={styles.container}>
         <View style={styles.titleContainer}>
           <Text variant="titleLarge" style={styles.title}>
-            {HOME_DATA[0].title}
+            {HOME_DATA.title}
           </Text>
         </View>
         {/* <StatusBar style="auto" /> */}
         <View style={styles.headlineContainer}>
           <Text variant="titleSmall" style={styles.title}>
-            {HOME_DATA[0].subTitle}
+            {HOME_DATA.subTitle}
           </Text>
           <View style={styles.checkContainer}>
             <Checkbox
@@ -43,7 +43,7 @@ export default function HomeScreen({ navigation }: NativeStackScreenProps) {
               }}
             />
             <Text variant="titleSmall" style={styles.title}>
-              {HOME_DATA[0].variantTitle}
+              {HOME_DATA.variantTitle}
             </Text>
           </View>
         </View>
@@ -54,7 +54,7 @@ export default function HomeScreen({ navigation }: NativeStackScreenProps) {
           mode="contained"
           onPress={() => checkAge()}
         >
-          {HOME_DATA[0].buttonTitle}
+          {HOME_DATA.buttonTitle}
         </Button>
       </View>
     </ImageBackground>
