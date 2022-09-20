@@ -57,4 +57,4 @@ export const CARD_DATA: DataProps[] = [
     value: "Potwór 9",
     image: temporaryImage,
   },
-].reverse();
+];

@@ -18,32 +18,31 @@ import {
   DM_WIDTH_MARGIN,
   DM_HEIGHT_MARGIN,
 } from "../../common/Dimensions";
-import ModalData from "../../helpers/getModalData";
 
 const CardFlip = () => {
   const randomCard = CARD_DATA[Math.floor(Math.random() * CARD_DATA.length)];
 
-  const [image, setImage] = useState(randomCard);
+  const [cardData, setCardData] = useState(randomCard);
 
   useEffect(() => {
     () => {
       const randomCard =
         CARD_DATA[Math.floor(Math.random() * CARD_DATA.length)];
-      setImage(randomCard);
+      setCardData(randomCard);
     };
-  }, [setImage]);
+  }, [setCardData]);
 
   const [refresh, setRefresh] = React.useState(false);
 
   const onPressArea = () => setRefresh(!refresh);
 
-  const onAnPressArea = () => setRefresh(false);
+  const onNoPressArea = () => setRefresh(false);
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <View style={styles.imageContainer}>
         <ImageBackground
-          source={image.image}
+          source={cardData.image}
           style={styles.image}
           borderRadius={20}
         >
@@ -58,13 +57,27 @@ const CardFlip = () => {
           <Snackbar
             style={styles.imageFlipedCard}
             visible={refresh}
-            onDismiss={onAnPressArea}
+            onDismiss={onNoPressArea}
             duration={Infinity}
             action={{
               label: "",
             }}
           >
-            <ModalData />
+            <View style={styles.imageFlipedContainer}>
+              <ImageBackground
+                source={cardData.image}
+                style={{ width: "70%", height: "70%" }}
+                borderRadius={20}
+              >
+                <Text></Text>
+              </ImageBackground>
+              <Text style={{ color: "white", fontSize: 20 }}>
+                Numer: {cardData.id}
+              </Text>
+              <Text style={{ color: "white", fontSize: 20 }}>
+                Nazwa: {cardData.value}
+              </Text>
+            </View>
           </Snackbar>
           {refresh && (
             <View style={styles.refreshContainer}>
@@ -124,6 +137,11 @@ const styles = StyleSheet.create({
     alignItems: "flex-start",
     borderRadius: 20,
     margin: "0%",
+  },
+  imageFlipedContainer: {
+    flex: 1,
+    width: DM_WIDTH_MARGIN,
+    height: DM_HEIGHT_MARGIN,
   },
   refreshContainer: {
     flexDirection: "row",
