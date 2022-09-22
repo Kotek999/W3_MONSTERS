@@ -4,7 +4,6 @@ import {
   StyleSheet,
   View,
   Text,
-  Image,
   ImageBackground,
 } from "react-native";
 import {
@@ -49,54 +48,51 @@ const CardFlip = (): JSX.Element => {
         color: MD3Colors.error50,
         unknown: cardData.color,
       },
+      monstersType: {
+        unique: "Unikat",
+        rare: "Rzadki",
+        common: "Zwyczajny",
+      },
     },
   ];
 
-  const firstIcon =
-    cardData.type === "Unikat"
-      ? typeArray[0].monstersPower.color
-      : typeArray[0].monstersPower.unknown && cardData.type === "Rzadki"
-      ? typeArray[0].monstersPower.color
-      : typeArray[0].monstersPower.unknown && cardData.type === "Zwyczajny"
-      ? typeArray[0].monstersPower.color
-      : typeArray[0].monstersPower.unknown;
+  const unique = typeArray[0].monstersType.unique;
+  const rare = typeArray[0].monstersType.rare;
+  const common = typeArray[0].monstersType.common;
 
-  const secondIcon =
-    cardData.type === "Unikat"
-      ? typeArray[0].monstersPower.color
-      : typeArray[0].monstersPower.unknown && cardData.type === "Rzadki"
-      ? typeArray[0].monstersPower.color
-      : typeArray[0].monstersPower.unknown && cardData.type === "Zwyczajny"
-      ? typeArray[0].monstersPower.unknown
-      : typeArray[0].monstersPower.unknown;
+  const typeColor = typeArray[0].monstersPower.color;
+  const typeUnknown = typeArray[0].monstersPower.unknown;
 
-  const thirdIcon =
-    cardData.type === "Unikat"
-      ? typeArray[0].monstersPower.color
-      : typeArray[0].monstersPower.unknown && cardData.type === "Rzadki"
-      ? typeArray[0].monstersPower.color
-      : typeArray[0].monstersPower.unknown && cardData.type === "Zwyczajny"
-      ? typeArray[0].monstersPower.unknown
-      : typeArray[0].monstersPower.unknown;
+  const typeFirst =
+    cardData.type === unique ||
+    cardData.type === rare ||
+    cardData.type === common
+      ? typeColor
+      : typeUnknown;
 
-  const fourthIcon =
-    cardData.type === "Unikat"
-      ? typeArray[0].monstersPower.color
-      : typeArray[0].monstersPower.unknown && cardData.type === "Rzadki"
-      ? typeArray[0].monstersPower.unknown
-      : typeArray[0].monstersPower.unknown && cardData.type === "Zwyczajny"
-      ? typeArray[0].monstersPower.unknown
-      : typeArray[0].monstersPower.unknown;
+  const typeSecond =
+    cardData.type === unique || cardData.type === rare
+      ? typeColor
+      : typeUnknown && cardData.type === common
+      ? typeUnknown
+      : typeUnknown;
 
-  const fifthIcon =
-    cardData.type === "Unikat"
-      ? typeArray[0].monstersPower.color
-      : typeArray[0].monstersPower.unknown && cardData.type === "Rzadki"
-      ? typeArray[0].monstersPower.unknown
-      : typeArray[0].monstersPower.unknown && cardData.type === "Zwyczajny"
-      ? typeArray[0].monstersPower.unknown
-      : typeArray[0].monstersPower.unknown;
+  const typeThird =
+    cardData.type === unique
+      ? typeColor
+      : typeUnknown && cardData.type === rare
+      ? typeUnknown
+      : typeUnknown && cardData.type === common
+      ? typeUnknown
+      : typeUnknown;
 
+  const typeObj = {
+    firstIcon: typeFirst,
+    secondIcon: typeSecond,
+    thirdIcon: typeSecond,
+    fourthIcon: typeThird,
+    fifthIcon: typeThird,
+  };
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <View style={styles.imageContainer}>
@@ -222,27 +218,27 @@ const CardFlip = (): JSX.Element => {
                   >
                     <IconButton
                       icon="sword-cross"
-                      iconColor={firstIcon}
+                      iconColor={typeObj.firstIcon}
                       size={20}
                     />
                     <IconButton
                       icon="sword-cross"
-                      iconColor={secondIcon}
+                      iconColor={typeObj.secondIcon}
                       size={20}
                     />
                     <IconButton
                       icon="sword-cross"
-                      iconColor={thirdIcon}
+                      iconColor={typeObj.thirdIcon}
                       size={20}
                     />
                     <IconButton
                       icon="sword-cross"
-                      iconColor={fourthIcon}
+                      iconColor={typeObj.fourthIcon}
                       size={20}
                     />
                     <IconButton
                       icon="sword-cross"
-                      iconColor={fifthIcon}
+                      iconColor={typeObj.fifthIcon}
                       size={20}
                     />
                   </View>
