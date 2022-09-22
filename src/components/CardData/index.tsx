@@ -4,6 +4,7 @@ import temporaryImage from "../../assets/images/temporaryImage.png";
 import temporaryImage_Two from "../../assets/images/temporaryImage_Two.png";
 // @ts-ignore
 import monster_GraveHag from "../../assets/monsters/monsterImage_GraveHag.png";
+import { MD3Colors } from "react-native-paper";
 
 interface DataProps {
   id: number;
@@ -11,6 +12,7 @@ interface DataProps {
   image: any;
   borderColor: string;
   type: string;
+  color?: string | undefined;
 }
 
 export const CARD_DATA: DataProps[] = [
@@ -20,6 +22,7 @@ export const CARD_DATA: DataProps[] = [
     image: monster_GraveHag,
     borderColor: "#cfd8dc",
     type: "Zwyczajny",
+    color: MD3Colors.neutralVariant80,
   },
   {
     id: 1,
@@ -27,6 +30,7 @@ export const CARD_DATA: DataProps[] = [
     image: temporaryImage,
     borderColor: "#fcc400",
     type: "Rzadki",
+    color: MD3Colors.neutralVariant80,
   },
   {
     id: 2,
@@ -34,6 +38,7 @@ export const CARD_DATA: DataProps[] = [
     image: temporaryImage_Two,
     borderColor: "#ab149e",
     type: "Unikat",
+    color: MD3Colors.neutralVariant80,
   },
   {
     id: 3,
@@ -41,6 +46,7 @@ export const CARD_DATA: DataProps[] = [
     image: temporaryImage_Two,
     borderColor: "#ab149e",
     type: "Unikat",
+    color: MD3Colors.neutralVariant80,
   },
   {
     id: 4,
@@ -48,6 +54,7 @@ export const CARD_DATA: DataProps[] = [
     image: temporaryImage_Two,
     borderColor: "#ab149e",
     type: "Unikat",
+    color: MD3Colors.neutralVariant80,
   },
   {
     id: 5,
@@ -55,6 +62,7 @@ export const CARD_DATA: DataProps[] = [
     image: temporaryImage,
     borderColor: "#fcc400",
     type: "Rzadki",
+    color: MD3Colors.neutralVariant80,
   },
   {
     id: 6,
@@ -62,6 +70,7 @@ export const CARD_DATA: DataProps[] = [
     image: temporaryImage,
     borderColor: "#fcc400",
     type: "Rzadki",
+    color: MD3Colors.neutralVariant80,
   },
   {
     id: 7,
@@ -69,6 +78,7 @@ export const CARD_DATA: DataProps[] = [
     image: temporaryImage,
     borderColor: "#fcc400",
     type: "Rzadki",
+    color: MD3Colors.neutralVariant80,
   },
   {
     id: 8,
@@ -76,5 +86,6 @@ export const CARD_DATA: DataProps[] = [
     image: temporaryImage,
     borderColor: "#fcc400",
     type: "Rzadki",
+    color: MD3Colors.neutralVariant80,
   },
 ];
