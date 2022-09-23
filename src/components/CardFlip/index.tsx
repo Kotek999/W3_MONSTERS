@@ -20,6 +20,7 @@ import {
   DM_WIDTH_MARGIN,
   DM_HEIGHT_MARGIN,
 } from "../../common/Dimensions";
+import Wrapper from "./Wrapper";
 
 const CardFlip = (): JSX.Element => {
   const randomCard = CARD_DATA[Math.floor(Math.random() * CARD_DATA.length)];
@@ -42,47 +43,70 @@ const CardFlip = (): JSX.Element => {
 
   // const avatar = require("../../assets/images/temporaryImage_Two.png");
 
-  const typeArray = [
+  interface ColorArray {
+    color: string;
+    unknown: string | undefined;
+  }
+
+  interface TypeArray {
+    epic: string;
+    rare: string;
+    common: string;
+  }
+
+  interface MonstersType {
+    epic_Monster: string;
+    rare_Monster: string;
+    common_Monster: string;
+  }
+
+  const colorArray: ColorArray[] = [
     {
-      monstersPower: {
-        color: MD3Colors.error50,
-        unknown: cardData.color,
-      },
-      monstersType: {
-        unique: "Unikat",
-        rare: "Rzadki",
-        common: "Zwyczajny",
-      },
+      color: MD3Colors.error50,
+      unknown: cardData.color,
     },
   ];
 
-  const unique = typeArray[0].monstersType.unique;
-  const rare = typeArray[0].monstersType.rare;
-  const common = typeArray[0].monstersType.common;
+  const typeArray: TypeArray[] = [
+    {
+      epic: "Unikat",
+      rare: "Rzadki",
+      common: "Zwyczajny",
+    },
+  ];
 
-  const typeColor = typeArray[0].monstersPower.color;
-  const typeUnknown = typeArray[0].monstersPower.unknown;
+  const monstersType: MonstersType[] = [
+    {
+      epic_Monster: typeArray[0].epic,
+      rare_Monster: typeArray[0].rare,
+      common_Monster: typeArray[0].common,
+    },
+  ];
+
+  const typeColor = colorArray[0].color;
+  const typeUnknown = colorArray[0].unknown;
 
   const typeFirst =
-    cardData.type === unique ||
-    cardData.type === rare ||
-    cardData.type === common
+    cardData.type === monstersType[0].epic_Monster ||
+    cardData.type === monstersType[0].rare_Monster ||
+    cardData.type === monstersType[0].common_Monster
       ? typeColor
       : typeUnknown;
 
   const typeSecond =
-    cardData.type === unique || cardData.type === rare
+    cardData.type === monstersType[0].epic_Monster ||
+    cardData.type === monstersType[0].rare_Monster
       ? typeColor
-      : typeUnknown && cardData.type === common
+      : typeUnknown && cardData.type === monstersType[0].common_Monster
       ? typeUnknown
       : typeUnknown;
 
   const typeThird =
-    cardData.type === unique
+    cardData.type === monstersType[0].epic_Monster
       ? typeColor
-      : typeUnknown && cardData.type === rare
+      : typeUnknown && cardData.type === monstersType[0].rare_Monster
       ? typeUnknown
-      : typeUnknown && cardData.type === common
+      : typeUnknown && cardData.type === monstersType[0].common_Monster
       ? typeUnknown
       : typeUnknown;
 
@@ -95,7 +119,7 @@ const CardFlip = (): JSX.Element => {
   };
   return (
     <SafeAreaView style={{ flex: 1 }}>
-      <View style={styles.imageContainer}>
+    <Wrapper>
         <ImageBackground
           source={cardData.image}
           style={styles.image}
@@ -168,7 +192,7 @@ const CardFlip = (): JSX.Element => {
                   marginTop: 60,
                   flexDirection: "column",
                   justifyContent: "space-between",
-                  alignItems: "flex-start",
+                  alignItems: "center",
                   alignContent: "center",
                 }}
               >
@@ -199,7 +223,7 @@ const CardFlip = (): JSX.Element => {
                 </View>
                 <View
                   style={{
-                    width: "115%",
+                    width: "100%",
                     flexDirection: "row",
                     justifyContent: "space-between",
                     alignItems: "center",
@@ -209,7 +233,7 @@ const CardFlip = (): JSX.Element => {
                   <Text style={{ color: "white", fontSize: 20 }}>Siła:</Text>
                   <View
                     style={{
-                      width: "100%",
+                      width: "115%",
                       flexDirection: "row",
                       justifyContent: "center",
                       alignItems: "center",
@@ -243,12 +267,43 @@ const CardFlip = (): JSX.Element => {
                     />
                   </View>
                 </View>
-                <Text style={{ color: "white", fontSize: 20 }}>Surowce:</Text>
+
+                <View
+                  style={{
+                    top: 40,
+                    flexDirection: "column",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    alignContent: "center",
+                  }}
+                >
+                  <Text style={{ color: "white", fontSize: 20 }}>Surowce:</Text>
+                  <View
+                    style={{
+                      width: "105%",
+                      top: 20,
+                      flexDirection: "row",
+                      justifyContent: "space-around",
+                      alignItems: "flex-start",
+                      alignContent: "center",
+                    }}
+                  >
+                    <Text style={{ color: "white", fontSize: 20 }}>
+                      Rzecz 1
+                    </Text>
+                    <Text style={{ color: "white", fontSize: 20 }}>
+                      Rzecz 2
+                    </Text>
+                    <Text style={{ color: "white", fontSize: 20 }}>
+                      Rzecz 3
+                    </Text>
+                  </View>
+                </View>
               </View>
             </View>
           </Snackbar>
         </ImageBackground>
-      </View>
+        </Wrapper>
     </SafeAreaView>
   );
 };
