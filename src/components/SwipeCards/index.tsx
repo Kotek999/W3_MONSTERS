@@ -28,9 +28,9 @@ import {
   DM_WIDTH_MARGIN,
   DM_HEIGHT_MARGIN,
 } from "../../common/Dimensions";
-import ModalData from "../../helpers/getModalData";
 import { useNavigation } from "@react-navigation/native";
 import CardFlip from "../CardFlip";
+import CardLogIn from "../CardLogIn";
 
 const SwipeableCard = ({ swipedDirection }: any) => {
   const randomCard = CARD_DATA[Math.floor(Math.random() * CARD_DATA.length)];
@@ -220,18 +220,14 @@ const SwipeCards = ({ navigation }: any) => {
                     >
                       <Card.Content
                         style={{
-                          width: "80%",
-                          height: "30%",
+                          top: 20,
                           backgroundColor: "transparent",
                           flexDirection: "column",
-                          justifyContent: "center",
-                          alignItems: "flex-start",
                           alignContent: "center",
                         }}
                       >
-                        <Title style={{ color: "white" }}>Potwór:</Title>
-                        <Divider style={styles.divider} />
-                        <ModalData />
+                        <Title style={{ color: "white" }}>Logowanie</Title>
+                        <CardLogIn navigation={navigation} />
                       </Card.Content>
                     </ImageBackground>
                   </Modal>
