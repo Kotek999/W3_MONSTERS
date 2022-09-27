@@ -119,7 +119,7 @@ const CardFlip = (): JSX.Element => {
   };
   return (
     <SafeAreaView style={{ flex: 1 }}>
-    <Wrapper>
+      <Wrapper>
         <ImageBackground
           source={cardData.image}
           style={styles.image}
@@ -157,7 +157,7 @@ const CardFlip = (): JSX.Element => {
                 />
                 <View style={{ flexDirection: "column", marginLeft: 30 }}>
                   <Text style={{ color: "white", fontSize: 20 }}>
-                    Numer: {cardData.id}
+                    Numer: {cardData.id + 1}
                   </Text>
                   <Text style={{ color: "white", fontSize: 20 }}>
                     Nazwa: {cardData.value}
@@ -303,7 +303,7 @@ const CardFlip = (): JSX.Element => {
             </View>
           </Snackbar>
         </ImageBackground>
-        </Wrapper>
+      </Wrapper>
     </SafeAreaView>
   );
 };
