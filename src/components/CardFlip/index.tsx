@@ -110,19 +110,48 @@ const CardFlip = (): JSX.Element => {
       ? typeUnknown
       : typeUnknown;
 
-  const typeObj = {
-    firstIcon: typeFirst,
-    secondIcon: typeSecond,
-    thirdIcon: typeSecond,
-    fourthIcon: typeThird,
-    fifthIcon: typeThird,
+  const typeObj = [
+    {
+      iconType: typeFirst,
+    },
+    {
+      iconType: typeSecond,
+    },
+    {
+      iconType: typeSecond,
+    },
+    {
+      iconType: typeThird,
+    },
+    {
+      iconType: typeThird,
+    },
+  ];
+
+  interface IconProps {
+    color: string | undefined;
+  }
+
+  const IconPower = (props: IconProps) => {
+    return <IconButton icon="skull" iconColor={props.color} size={20} />;
+  };
+
+  const image: any = {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    justifyContent: "center",
+    alignItems: "flex-start",
+    borderRadius: 25,
+    marginTop: "20%",
+    borderWidth: 4,
+    borderColor: cardData.borderColor,
   };
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <Wrapper>
         <ImageBackground
           source={cardData.image}
-          style={styles.image}
+          style={image}
           borderRadius={20}
         >
           <TouchableRipple
@@ -143,36 +172,21 @@ const CardFlip = (): JSX.Element => {
             }}
           >
             <View style={styles.imageFlipedContainer}>
-              <View
-                style={{
-                  flexDirection: "row",
-                  justifyContent: "center",
-                  alignItems: "center",
-                }}
-              >
-                <Avatar.Image
-                  size={150}
-                  source={cardData.image}
-                  style={{ borderWidth: 2, borderColor: cardData.borderColor }}
-                />
-                <View style={{ flexDirection: "column", marginLeft: 30 }}>
-                  <Text style={{ color: "white", fontSize: 20 }}>
+              <View style={styles.avatarWithText}>
+                <Avatar.Image size={150} source={cardData.image} />
+                <View style={styles.personalDataContainer}>
+                  <Text style={styles.personalDataText}>
                     Numer: {cardData.id + 1}
                   </Text>
-                  <Text style={{ color: "white", fontSize: 20 }}>
+                  <Text style={styles.personalDataTextMarginName}>
                     Nazwa: {cardData.value}
                   </Text>
-                  <Text style={{ color: "white", fontSize: 20 }}>
+                  <Text style={styles.personalDataTextMarginType}>
                     Typ: {cardData.type}
                   </Text>
                 </View>
               </View>
-              <View
-                style={{
-                  width: "100%",
-                  height: 1,
-                }}
-              >
+              <View style={styles.dividerWithRefresh}>
                 <Divider style={styles.divider} />
                 {refresh && (
                   <View style={styles.refreshContainer}>
@@ -186,116 +200,33 @@ const CardFlip = (): JSX.Element => {
                   </View>
                 )}
               </View>
-              <View
-                style={{
-                  width: "90%",
-                  marginTop: 60,
-                  flexDirection: "column",
-                  justifyContent: "space-between",
-                  alignItems: "center",
-                  alignContent: "center",
-                }}
-              >
-                <View
-                  style={{
-                    flexDirection: "row",
-                    justifyContent: "center",
-                    alignItems: "center",
-                    alignContent: "center",
-                  }}
-                >
-                  <View
-                    style={{
-                      width: "100%",
-                      flexDirection: "row",
-                      justifyContent: "space-between",
-                      alignItems: "flex-start",
-                      alignContent: "center",
-                    }}
-                  >
-                    <Text style={{ color: "white", fontSize: 20 }}>
-                      Lokalizacja:
-                    </Text>
-                    <Text style={{ color: "white", fontSize: 20 }}>
-                      "Miejsce"
-                    </Text>
+              <View style={styles.contentContainer}>
+                <View style={styles.firstContentContainer}>
+                  <View style={styles.locationContainer}>
+                    <Text style={styles.contentText}>Lokalizacja:</Text>
+                    <Text style={styles.contentText}>{cardData.place}</Text>
                   </View>
                 </View>
-                <View
-                  style={{
-                    width: "100%",
-                    flexDirection: "row",
-                    justifyContent: "space-between",
-                    alignItems: "center",
-                    alignContent: "center",
-                  }}
-                >
-                  <Text style={{ color: "white", fontSize: 20 }}>Siła:</Text>
-                  <View
-                    style={{
-                      width: "115%",
-                      flexDirection: "row",
-                      justifyContent: "center",
-                      alignItems: "center",
-                      alignContent: "center",
-                    }}
-                  >
-                    <IconButton
-                      icon="sword-cross"
-                      iconColor={typeObj.firstIcon}
-                      size={20}
-                    />
-                    <IconButton
-                      icon="sword-cross"
-                      iconColor={typeObj.secondIcon}
-                      size={20}
-                    />
-                    <IconButton
-                      icon="sword-cross"
-                      iconColor={typeObj.thirdIcon}
-                      size={20}
-                    />
-                    <IconButton
-                      icon="sword-cross"
-                      iconColor={typeObj.fourthIcon}
-                      size={20}
-                    />
-                    <IconButton
-                      icon="sword-cross"
-                      iconColor={typeObj.fifthIcon}
-                      size={20}
-                    />
+                <View style={styles.secondContentContainer}>
+                  <Text style={styles.contentText}>Siła:</Text>
+                  <View style={styles.iconsContainer}>
+                    {typeObj.map((type, key) => {
+                      return <IconPower color={type.iconType} key={key} />;
+                    })}
                   </View>
                 </View>
 
-                <View
-                  style={{
-                    top: 40,
-                    flexDirection: "column",
-                    justifyContent: "center",
-                    alignItems: "center",
-                    alignContent: "center",
-                  }}
-                >
-                  <Text style={{ color: "white", fontSize: 20 }}>Surowce:</Text>
-                  <View
-                    style={{
-                      width: "105%",
-                      top: 20,
-                      flexDirection: "row",
-                      justifyContent: "space-around",
-                      alignItems: "flex-start",
-                      alignContent: "center",
-                    }}
-                  >
-                    <Text style={{ color: "white", fontSize: 20 }}>
-                      Rzecz 1
+                <View style={styles.thirdContentContainer}>
+                  <Text style={styles.contentText}>Surowce:</Text>
+                  <View style={styles.lootContainer}>
+                    <Text style={styles.contentText}>
+                      {cardData.loot_first}
                     </Text>
-                    <Text style={{ color: "white", fontSize: 20 }}>
-                      Rzecz 2
+                    <Text style={styles.contentText}>
+                      {cardData.loot_second}
                     </Text>
-                    <Text style={{ color: "white", fontSize: 20 }}>
-                      Rzecz 3
+                    <Text style={styles.contentText}>
+                      {cardData.loot_third}
                     </Text>
                   </View>
                 </View>
@@ -319,16 +250,6 @@ const styles = StyleSheet.create({
     flexWrap: "wrap",
     justifyContent: "center",
     alignItems: "flex-start",
-  },
-  image: {
-    width: DM_WIDTH_MARGIN,
-    height: DM_HEIGHT_MARGIN,
-    flexDirection: "row",
-    flexWrap: "wrap",
-    justifyContent: "center",
-    alignItems: "flex-start",
-    borderRadius: 20,
-    marginTop: "20%",
   },
   imagePressableArea: {
     backgroundColor: "transparent",
@@ -360,7 +281,7 @@ const styles = StyleSheet.create({
     margin: "0%",
   },
   refreshContainer: {
-    top: "70%",
+    top: "80%",
     flexDirection: "row",
     flexWrap: "wrap",
     alignItems: "center",
@@ -376,5 +297,88 @@ const styles = StyleSheet.create({
     backgroundColor: "#90a4ae",
     width: "90%",
     height: 1,
+  },
+  avatarWithText: {
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  personalDataContainer: {
+    flexDirection: "column",
+    marginLeft: 30,
+  },
+  personalDataText: {
+    color: "white",
+    fontSize: 18,
+  },
+  personalDataTextMarginName: {
+    color: "white",
+    fontSize: 18,
+    top: 5,
+  },
+  personalDataTextMarginType: {
+    color: "white",
+    fontSize: 18,
+    top: 10,
+  },
+  dividerWithRefresh: {
+    width: "100%",
+    height: 1,
+  },
+  contentContainer: {
+    width: "90%",
+    marginTop: 60,
+    flexDirection: "column",
+    justifyContent: "space-between",
+    alignItems: "center",
+    alignContent: "center",
+  },
+  firstContentContainer: {
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+    alignContent: "center",
+  },
+  locationContainer: {
+    width: "100%",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "flex-start",
+    alignContent: "center",
+  },
+  contentText: {
+    color: "white",
+    fontSize: 16,
+  },
+  secondContentContainer: {
+    width: "100%",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    alignContent: "center",
+    top: 20,
+  },
+  iconsContainer: {
+    width: "115%",
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+    alignContent: "center",
+  },
+  thirdContentContainer: {
+    top: 40,
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center",
+    alignContent: "center",
+  },
+  lootContainer: {
+    width: "100%",
+    top: 20,
+    flexDirection: "column",
+    // when I found an images, change to this ==> flexDirection: "row",
+    justifyContent: "space-around",
+    alignItems: "flex-start",
+    alignContent: "center",
   },
 });

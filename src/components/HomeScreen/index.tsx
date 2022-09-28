@@ -48,8 +48,8 @@ export default function HomeScreen({ navigation }: NativeStackScreenProps) {
           </View>
         </View>
         <Button
-          textColor="red"
-          buttonColor="white"
+          textColor={!checked ? "lightgray" : "red"}
+          buttonColor={!checked ? "gray" : "white"}
           icon="sword"
           mode="contained"
           onPress={() => checkAge()}
