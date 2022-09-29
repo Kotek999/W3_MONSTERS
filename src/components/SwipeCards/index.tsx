@@ -1,9 +1,8 @@
-import React, { useState, useEffect, FC } from "react";
+import React, { useState, useEffect } from "react";
 import {
   SafeAreaView,
   StyleSheet,
   View,
-  Text,
   Animated,
   PanResponder,
   ImageBackground,
@@ -15,7 +14,6 @@ import {
   Modal,
   Card,
   Title,
-  Divider,
   IconButton,
   MD3Colors,
 } from "react-native-paper";
@@ -28,9 +26,10 @@ import {
   DM_WIDTH_MARGIN,
   DM_HEIGHT_MARGIN,
 } from "../../common/Dimensions";
-import { useNavigation } from "@react-navigation/native";
 import CardFlip from "../CardFlip";
 import CardLogIn from "../CardLogIn";
+//@ts-ignore
+import type { NativeStackScreenProps } from "@react-navigation/native-stack";
 
 const SwipeableCard = ({ swipedDirection }: any) => {
   const randomCard = CARD_DATA[Math.floor(Math.random() * CARD_DATA.length)];
@@ -109,11 +108,6 @@ const SwipeableCard = ({ swipedDirection }: any) => {
     },
   });
 
-  const id: any = image.id;
-  const value: any = image.value;
-
-  const navigation: any = useNavigation();
-
   return (
     <Animated.View
       {...panResponder.panHandlers}
@@ -129,13 +123,12 @@ const SwipeableCard = ({ swipedDirection }: any) => {
   );
 };
 
-const SwipeCards = ({ navigation }: any) => {
+const SwipeCards = ({ navigation }: NativeStackScreenProps) => {
   const [noMoreCard, setNoMoreCard] = useState(true);
   const [sampleCardArray, setSampleCardArray] = useState(CARD_DATA);
   const [swipeDirection, setSwipeDirection] = useState("--");
 
-  const removeCard = (id: any) => {
-    // alert(id);
+  const removeCard = (id: number) => {
     sampleCardArray.splice(
       sampleCardArray.findIndex((item) => item.id == id),
       1
@@ -146,13 +139,19 @@ const SwipeCards = ({ navigation }: any) => {
     }
   };
 
-  const lastSwipedDirection = (swipeDirection: any) => {
+  const lastSwipedDirection = (
+    swipeDirection: React.SetStateAction<string>
+  ) => {
     setSwipeDirection(swipeDirection);
   };
 
   const [state, setState] = React.useState({ open: false });
 
-  const onStateChange = ({ open }: any) => setState({ open });
+  const onStateChange = (
+    open: React.SetStateAction<{
+      open: boolean;
+    }>
+  ) => setState(open);
 
   const { open } = state;
 
@@ -212,21 +211,10 @@ const SwipeCards = ({ navigation }: any) => {
                     <ImageBackground
                       borderRadius={16}
                       source={modalBgImage_Three}
-                      style={{
-                        padding: 20,
-                        top: 0,
-                        height: DM_HEIGHT / 2,
-                      }}
+                      style={styles.imageBackgroundStyle}
                     >
-                      <Card.Content
-                        style={{
-                          top: 20,
-                          backgroundColor: "transparent",
-                          flexDirection: "column",
-                          alignContent: "center",
-                        }}
-                      >
-                        <Title style={{ color: "white" }}>Logowanie</Title>
+                      <Card.Content style={styles.cardContentContainer}>
+                        <Title style={styles.text}>Logowanie</Title>
                         <CardLogIn navigation={navigation} />
                       </Card.Content>
                     </ImageBackground>
@@ -253,27 +241,11 @@ const SwipeCards = ({ navigation }: any) => {
                   visible={false}
                   open={open}
                   icon={open ? "calendar-today" : "plus"}
-                  actions={[
-                    { icon: "plus", onPress: () => console.log("Pressed add") },
-                    {
-                      icon: "star",
-                      label: "Star",
-                      labelTextColor: "white",
-                      onPress: () => console.log("Pressed star"),
-                    },
-                    {
-                      icon: "email",
-                      label: "Email",
-                      labelTextColor: "white",
-                      onPress: () => console.log("Pressed email"),
-                    },
-                    {
-                      icon: "bell",
-                      label: "Remind",
-                      labelTextColor: "white",
-                      onPress: showModal,
-                    },
-                  ]}
+                  actions={
+                    [
+                      // actions
+                    ]
+                  }
                   onStateChange={onStateChange}
                 />
               )}
@@ -337,5 +309,19 @@ const styles = StyleSheet.create({
     backgroundColor: "yellow",
     width: "50%",
     height: 3,
+  },
+  imageBackgroundStyle: {
+    padding: 20,
+    top: 0,
+    height: DM_HEIGHT / 2,
+  },
+  cardContentContainer: {
+    top: 20,
+    backgroundColor: "transparent",
+    flexDirection: "column",
+    alignContent: "center",
+  },
+  text: {
+    color: "white",
   },
 });

@@ -7,10 +7,6 @@ import type { NativeStackScreenProps } from "@react-navigation/native-stack";
 export default function CardLogIn({ navigation }: NativeStackScreenProps) {
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState({});
-
-  //   console.log("Nazwa:", name);
-  //   console.log("Hasło:", password);
 
   const validNameWithPassword = name === "Geralt" && password === "Ciri";
   const inValidPassword = name === "Geralt" && password != "Ciri";

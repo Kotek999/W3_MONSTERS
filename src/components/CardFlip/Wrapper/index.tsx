@@ -1,8 +1,13 @@
 import React from "react";
 import { SafeAreaView, StyleSheet, View } from "react-native";
 import { DM_WIDTH, DM_HEIGHT_MARGIN } from "../../../common/Dimensions";
+import { ReactNode } from "react";
 
-const Wrapper = (props: any): JSX.Element => {
+interface WrapperProps {
+  children: ReactNode;
+}
+
+const Wrapper = (props: WrapperProps): JSX.Element => {
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <View style={styles.imageContainer}>{props.children}</View>

@@ -15,12 +15,14 @@ import {
   Divider,
 } from "react-native-paper";
 import { CARD_DATA } from "../CardData";
+import { cardFlipData } from "./data";
 import {
   DM_WIDTH,
   DM_WIDTH_MARGIN,
   DM_HEIGHT_MARGIN,
 } from "../../common/Dimensions";
 import Wrapper from "./Wrapper";
+import { FlexAlignType } from "react-native";
 
 const CardFlip = (): JSX.Element => {
   const randomCard = CARD_DATA[Math.floor(Math.random() * CARD_DATA.length)];
@@ -40,8 +42,6 @@ const CardFlip = (): JSX.Element => {
   const onPressArea = () => setRefresh(!refresh);
 
   const onNoPressArea = () => setRefresh(false);
-
-  // const avatar = require("../../assets/images/temporaryImage_Two.png");
 
   interface ColorArray {
     color: string;
@@ -136,7 +136,18 @@ const CardFlip = (): JSX.Element => {
     return <IconButton icon="skull" iconColor={props.color} size={20} />;
   };
 
-  const image: any = {
+  interface ImageProps {
+    flexDirection: "row" | undefined;
+    flexWrap: "wrap" | undefined;
+    justifyContent: "center" | undefined;
+    alignItems: FlexAlignType | undefined;
+    borderRadius: number;
+    marginTop: string;
+    borderWidth: number;
+    borderColor: string;
+  }
+
+  const image: ImageProps = {
     flexDirection: "row",
     flexWrap: "wrap",
     justifyContent: "center",
@@ -176,13 +187,16 @@ const CardFlip = (): JSX.Element => {
                 <Avatar.Image size={150} source={cardData.image} />
                 <View style={styles.personalDataContainer}>
                   <Text style={styles.personalDataText}>
-                    Numer: {cardData.id + 1}
+                    {cardFlipData.card_id} {cardData.id + 1}
                   </Text>
                   <Text style={styles.personalDataTextMarginName}>
-                    Nazwa: {cardData.value}
+                    {cardFlipData.card_name} {cardData.value}
                   </Text>
                   <Text style={styles.personalDataTextMarginType}>
-                    Typ: {cardData.type}
+                    {cardFlipData.card_type}{" "}
+                    <Text style={{ color: cardData.typeColor }}>
+                      {cardData.type}
+                    </Text>
                   </Text>
                 </View>
               </View>
@@ -190,9 +204,11 @@ const CardFlip = (): JSX.Element => {
                 <Divider style={styles.divider} />
                 {refresh && (
                   <View style={styles.refreshContainer}>
-                    <Text style={styles.refreshTitle}>Odśwież</Text>
+                    <Text style={styles.refreshTitle}>
+                      {cardFlipData.card_refresh}
+                    </Text>
                     <IconButton
-                      icon="refresh"
+                      icon={"refresh"}
                       iconColor={MD3Colors.error50}
                       size={34}
                       onPress={onPressArea}
@@ -203,12 +219,16 @@ const CardFlip = (): JSX.Element => {
               <View style={styles.contentContainer}>
                 <View style={styles.firstContentContainer}>
                   <View style={styles.locationContainer}>
-                    <Text style={styles.contentText}>Lokalizacja:</Text>
+                    <Text style={styles.contentText}>
+                      {cardFlipData.card_location}
+                    </Text>
                     <Text style={styles.contentText}>{cardData.place}</Text>
                   </View>
                 </View>
                 <View style={styles.secondContentContainer}>
-                  <Text style={styles.contentText}>Siła:</Text>
+                  <Text style={styles.contentText}>
+                    {cardFlipData.card_strength}
+                  </Text>
                   <View style={styles.iconsContainer}>
                     {typeObj.map((type, key) => {
                       return <IconPower color={type.iconType} key={key} />;
@@ -217,7 +237,9 @@ const CardFlip = (): JSX.Element => {
                 </View>
 
                 <View style={styles.thirdContentContainer}>
-                  <Text style={styles.contentText}>Surowce:</Text>
+                  <Text style={styles.contentText}>
+                    {cardFlipData.card_resources}
+                  </Text>
                   <View style={styles.lootContainer}>
                     <Text style={styles.contentText}>
                       {cardData.loot_first}
@@ -376,7 +398,7 @@ const styles = StyleSheet.create({
     width: "100%",
     top: 20,
     flexDirection: "column",
-    // when I found an images, change to this ==> flexDirection: "row",
+    // when I find an images, change to this ==> flexDirection: "row",
     justifyContent: "space-around",
     alignItems: "flex-start",
     alignContent: "center",
