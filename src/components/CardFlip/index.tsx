@@ -13,6 +13,7 @@ import {
   MD3Colors,
   Avatar,
   Divider,
+  Button,
 } from "react-native-paper";
 import { CARD_DATA } from "../CardData";
 import { cardFlipData } from "./data";
@@ -23,6 +24,9 @@ import {
 } from "../../common/Dimensions";
 import Wrapper from "./Wrapper";
 import { FlexAlignType } from "react-native";
+import { useNavigation } from "@react-navigation/native";
+//@ts-ignore
+import type { NativeStackScreenProps } from "@react-navigation/native-stack";
 
 const CardFlip = (): JSX.Element => {
   const randomCard = CARD_DATA[Math.floor(Math.random() * CARD_DATA.length)];
@@ -42,6 +46,10 @@ const CardFlip = (): JSX.Element => {
   const onPressArea = () => setRefresh(!refresh);
 
   const onNoPressArea = () => setRefresh(false);
+
+  const navigation: NativeStackScreenProps = useNavigation();
+
+  const onClickGoToRedux = () => navigation.navigate("Data");
 
   interface ColorArray {
     color: string;
@@ -216,6 +224,11 @@ const CardFlip = (): JSX.Element => {
                   </View>
                 )}
               </View>
+              <IconButton
+                icon={"arrow-right"}
+                onPress={onClickGoToRedux}
+                iconColor="lime"
+              ></IconButton>
               <View style={styles.contentContainer}>
                 <View style={styles.firstContentContainer}>
                   <View style={styles.locationContainer}>

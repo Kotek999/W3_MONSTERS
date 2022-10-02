@@ -5,6 +5,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 import HomeScreen from "./src/components/HomeScreen";
 import SwipeCards from "./src/components/SwipeCards";
 import CardFlip from "./src/components/CardFlip";
+import Data from "./src/components/Redux/index";
 
 const RootStack = createStackNavigator();
 
@@ -30,6 +31,13 @@ export default function App() {
         <RootStack.Screen
           name="CardFlip"
           component={CardFlip}
+          options={{
+            headerShown: false,
+          }}
+        />
+        <RootStack.Screen
+          name="Data"
+          component={Data}
           options={{
             headerShown: false,
           }}
