@@ -2,8 +2,8 @@ import { takeEvery, call, put, all, fork, select } from "redux-saga/effects";
 import { actionCreators, GET_DATA } from "./action";
 import content from "../CardContentData/content.json";
 
-const data: any = {
-  "content_DATA": content,
+export const data: any = {
+  content_DATA: content,
 };
 
 function* onGetDataContentSaga(): any {
@@ -12,7 +12,7 @@ function* onGetDataContentSaga(): any {
 
     yield put(actionCreators.putData(data[cardData]));
   } catch (error) {
-    // yield put(actionCreators.putData(null));
+    yield put(actionCreators.putData(0));
   }
 }
 

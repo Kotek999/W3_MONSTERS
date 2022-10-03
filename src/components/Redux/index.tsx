@@ -2,12 +2,16 @@ import { actionCreators } from "./action";
 import { connect } from "react-redux";
 import Card from "./../TestCard/index";
 
-const mapStateToProps = (state: any) => {
+export interface DataState {
+  data: {};
+}
+
+const mapStateToProps = (state: DataState) => {
   const pageData = state.data && state.data;
   return { pageData };
 };
 
-function mapDispatchToProps(dispatch: any) {
+function mapDispatchToProps(dispatch: Function) {
   const callToData = () => dispatch(actionCreators.getData());
   return { callToData };
 }

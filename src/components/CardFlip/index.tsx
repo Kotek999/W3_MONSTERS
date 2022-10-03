@@ -215,20 +215,22 @@ const CardFlip = (): JSX.Element => {
                     <Text style={styles.refreshTitle}>
                       {cardFlipData.card_refresh}
                     </Text>
-                    <IconButton
-                      icon={"refresh"}
-                      iconColor={MD3Colors.error50}
-                      size={34}
-                      onPress={onPressArea}
-                    />
+                    <View style={styles.refreshIconsContainer}>
+                      <IconButton
+                        icon={"refresh"}
+                        iconColor={MD3Colors.error50}
+                        size={34}
+                        onPress={onPressArea}
+                      />
+                      <IconButton
+                        icon={"cards"}
+                        onPress={onClickGoToRedux}
+                        iconColor={MD3Colors.error80}
+                      />
+                    </View>
                   </View>
                 )}
               </View>
-              <IconButton
-                icon={"arrow-right"}
-                onPress={onClickGoToRedux}
-                iconColor="lime"
-              ></IconButton>
               <View style={styles.contentContainer}>
                 <View style={styles.firstContentContainer}>
                   <View style={styles.locationContainer}>
@@ -321,6 +323,14 @@ const styles = StyleSheet.create({
     flexWrap: "wrap",
     alignItems: "center",
     alignContent: "flex-end",
+  },
+  refreshIconsContainer: {
+    width: "70%",
+    flexDirection: "row",
+    flexWrap: "wrap",
+    justifyContent: "space-between",
+    alignItems: "center",
+    alignContent: "center",
   },
   refreshTitle: {
     marginTop: 16,

@@ -1,10 +1,3 @@
-// @ts-ignore
-import temporaryImage from "../../assets/images/temporaryImage.png";
-// @ts-ignore
-import temporaryImage_Two from "../../assets/images/temporaryImage_Two.png";
-// // @ts-ignore
-// import monster_GraveHag from "../../assets/monsters/monsterImage_GraveHag.png";
-
 const monster_GraveHag = require("../../assets/monsters/monsterImage_GraveHag.png");
 const monster_Arachas = require("../../assets/monsters/monsterImage_Arachas.png");
 const monster_Caretaker = require("../../assets/monsters/monsterImage_Caretaker.png");

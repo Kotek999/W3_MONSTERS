@@ -5,7 +5,7 @@ export const actionCreators = {
   getData: () => ({
     type: GET_DATA,
   }),
-  putData: (payload: any) => ({
+  putData: (payload: number) => ({
     type: PUT_DATA,
     payload,
   }),
