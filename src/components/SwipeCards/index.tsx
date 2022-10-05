@@ -30,6 +30,7 @@ import CardFlip from "../CardFlip";
 import CardLogIn from "../CardLogIn";
 //@ts-ignore
 import type { NativeStackScreenProps } from "@react-navigation/native-stack";
+import isWEB from "../../common/Resolutions/isWEB";
 
 const SwipeableCard = ({ swipedDirection }: any) => {
   const randomCard = CARD_DATA[Math.floor(Math.random() * CARD_DATA.length)];
@@ -181,23 +182,27 @@ const SwipeCards = ({ navigation }: NativeStackScreenProps) => {
     <SafeAreaView style={{ flex: 1 }}>
       {image && (
         <View style={styles.image}>
-          {sampleCardArray.map((item, key) => (
-            <SwipeableCard
-              key={key}
-              item={item}
-              removeCard={() => removeCard(item.id)}
-              swipedDirection={lastSwipedDirection}
-            />
-          ))}
-          {noMoreCard && (
-            <View style={styles.containerArrow}>
-              <IconButton
-                icon="arrow-left"
-                iconColor={MD3Colors.error50}
-                size={34}
-                onPress={() => navigation.navigate("Home")}
+          {!isWEB() &&
+            sampleCardArray.map((item, key) => (
+              <SwipeableCard
+                key={key}
+                item={item}
+                removeCard={() => removeCard(item.id)}
+                swipedDirection={lastSwipedDirection}
               />
-            </View>
+            ))}
+          {noMoreCard && (
+            <>
+              <View style={styles.containerArrow}>
+                <IconButton
+                  icon="arrow-left"
+                  iconColor={MD3Colors.error50}
+                  size={34}
+                  onPress={() => navigation.navigate("Home")}
+                />
+              </View>
+              {isWEB() && <CardFlip />}
+            </>
           )}
           <Provider>
             <Portal>

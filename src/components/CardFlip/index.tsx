@@ -13,7 +13,6 @@ import {
   MD3Colors,
   Avatar,
   Divider,
-  Button,
 } from "react-native-paper";
 import { CARD_DATA } from "../CardData";
 import { cardFlipData } from "./data";
@@ -21,6 +20,7 @@ import {
   DM_WIDTH,
   DM_WIDTH_MARGIN,
   DM_HEIGHT_MARGIN,
+  DM_WIDTH_MARGIN_WEB,
 } from "../../common/Dimensions";
 import Wrapper from "./Wrapper";
 import { FlexAlignType } from "react-native";
@@ -290,10 +290,11 @@ const styles = StyleSheet.create({
   },
   imagePressableArea: {
     backgroundColor: "transparent",
-    width: DM_WIDTH_MARGIN,
+    width: DM_WIDTH_MARGIN_WEB,
     height: DM_HEIGHT_MARGIN,
     flexDirection: "row",
     flexWrap: "wrap",
+    borderRadius: 20,
     justifyContent: "center",
     alignItems: "flex-start",
   },
@@ -308,7 +309,7 @@ const styles = StyleSheet.create({
   },
   flipedCard: {
     backgroundColor: "#333333",
-    width: DM_WIDTH_MARGIN,
+    width: DM_WIDTH_MARGIN_WEB,
     height: DM_HEIGHT_MARGIN,
     flexDirection: "row",
     flexWrap: "wrap",

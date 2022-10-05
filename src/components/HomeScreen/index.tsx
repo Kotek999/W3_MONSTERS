@@ -1,4 +1,3 @@
-import { StatusBar } from "expo-status-bar";
 import { useState } from "react";
 import { StyleSheet, View, ImageBackground, ToastAndroid } from "react-native";
 import { Text, Checkbox, Button } from "react-native-paper";
@@ -8,15 +7,17 @@ import { DM_WIDTH, DM_HEIGHT } from "../../common/Dimensions";
 import { HOME_DATA } from "./data";
 // @ts-ignore
 import type { NativeStackScreenProps } from "@react-navigation/native-stack";
+import isWEB from "../../common/Resolutions/isWEB";
 
 export default function HomeScreen({ navigation }: NativeStackScreenProps) {
   const [checked, setChecked] = useState(false);
+  const check = "Potwierdź swój wiek!";
 
   const checkAge = () => {
     if (checked) {
       return navigation.navigate("Information");
     } else {
-      ToastAndroid.show("Potwierdź swój wiek!", ToastAndroid.CENTER);
+      isWEB() ? alert(check) : ToastAndroid.show(check, ToastAndroid.CENTER);
     }
   };
 
@@ -28,7 +29,6 @@ export default function HomeScreen({ navigation }: NativeStackScreenProps) {
             {HOME_DATA.title}
           </Text>
         </View>
-        {/* <StatusBar style="auto" /> */}
         <View style={styles.headlineContainer}>
           <Text variant="titleSmall" style={styles.title}>
             {HOME_DATA.subTitle}
