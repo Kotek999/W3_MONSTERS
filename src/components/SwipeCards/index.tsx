@@ -6,6 +6,7 @@ import {
   Animated,
   PanResponder,
   ImageBackground,
+  ScrollView,
 } from "react-native";
 import {
   FAB,
@@ -181,82 +182,84 @@ const SwipeCards = ({ navigation }: NativeStackScreenProps) => {
   return (
     <SafeAreaView style={{ flex: 1 }}>
       {image && (
-        <View style={styles.image}>
-          {!isWEB() &&
-            sampleCardArray.map((item, key) => (
-              <SwipeableCard
-                key={key}
-                item={item}
-                removeCard={() => removeCard(item.id)}
-                swipedDirection={lastSwipedDirection}
-              />
-            ))}
-          {noMoreCard && (
-            <>
-              <View style={styles.containerArrow}>
-                <IconButton
-                  icon="arrow-left"
-                  iconColor={MD3Colors.error50}
-                  size={34}
-                  onPress={() => navigation.navigate("Home")}
+        <ScrollView style={styles.scrollView}>
+          <View style={styles.image}>
+            {!isWEB() &&
+              sampleCardArray.map((item, key) => (
+                <SwipeableCard
+                  key={`swipe-card-${key}`}
+                  item={item}
+                  removeCard={() => removeCard(item.id)}
+                  swipedDirection={lastSwipedDirection}
                 />
-              </View>
-              {isWEB() && <CardFlip />}
-            </>
-          )}
-          <Provider>
-            <Portal>
-              <Provider>
-                <Portal>
-                  <Modal
-                    visible={visible}
-                    onDismiss={hideModal}
-                    contentContainerStyle={containerStyle}
-                  >
-                    <ImageBackground
-                      borderRadius={16}
-                      source={modalBgImage_Three}
-                      style={styles.imageBackgroundStyle}
+              ))}
+            {noMoreCard && (
+              <>
+                <View style={styles.containerArrow}>
+                  <IconButton
+                    icon="arrow-left"
+                    iconColor={MD3Colors.error50}
+                    size={34}
+                    onPress={() => navigation.navigate("Home")}
+                  />
+                </View>
+                {isWEB() && <CardFlip />}
+              </>
+            )}
+            <Provider>
+              <Portal>
+                <Provider>
+                  <Portal>
+                    <Modal
+                      visible={visible}
+                      onDismiss={hideModal}
+                      contentContainerStyle={containerStyle}
                     >
-                      <Card.Content style={styles.cardContentContainer}>
-                        <Title style={styles.text}>Logowanie</Title>
-                        <CardLogIn navigation={navigation} />
-                      </Card.Content>
-                    </ImageBackground>
-                  </Modal>
-                </Portal>
-              </Provider>
-              {!visible ? (
-                <FAB.Group
-                  backdropColor="#000000a0"
-                  visible
-                  style={{ marginBottom: 24 }}
-                  open={open}
-                  icon={open ? "calendar-today" : "plus"}
-                  actions={
-                    [
-                      // actions
-                    ]
-                  }
-                  onStateChange={showModal}
-                />
-              ) : (
-                <FAB.Group
-                  backdropColor="#000000a0"
-                  visible={false}
-                  open={open}
-                  icon={open ? "calendar-today" : "plus"}
-                  actions={
-                    [
-                      // actions
-                    ]
-                  }
-                  onStateChange={onStateChange}
-                />
-              )}
-            </Portal>
-          </Provider>
-        </View>
+                      <ImageBackground
+                        borderRadius={16}
+                        source={modalBgImage_Three}
+                        style={styles.imageBackgroundStyle}
+                      >
+                        <Card.Content style={styles.cardContentContainer}>
+                          <Title style={styles.text}>Logowanie</Title>
+                          <CardLogIn navigation={navigation} />
+                        </Card.Content>
+                      </ImageBackground>
+                    </Modal>
+                  </Portal>
+                </Provider>
+                {!visible ? (
+                  <FAB.Group
+                    backdropColor="#000000a0"
+                    visible
+                    style={{ marginBottom: 24 }}
+                    open={open}
+                    icon={open ? "calendar-today" : "plus"}
+                    actions={
+                      [
+                        // actions
+                      ]
+                    }
+                    onStateChange={showModal}
+                  />
+                ) : (
+                  <FAB.Group
+                    backdropColor="#000000a0"
+                    visible={false}
+                    open={open}
+                    icon={open ? "calendar-today" : "plus"}
+                    actions={
+                      [
+                        // actions
+                      ]
+                    }
+                    onStateChange={onStateChange}
+                  />
+                )}
+              </Portal>
+            </Provider>
+          </View>
+        </ScrollView>
       )}
     </SafeAreaView>
   );
@@ -273,11 +276,13 @@ const styles = StyleSheet.create({
     position: "absolute",
     borderRadius: 7,
   },
+  scrollView: {
+    backgroundColor: "black",
+  },
   image: {
     backgroundColor: "black",
-    flex: 1,
     width: DM_WIDTH,
-    height: DM_HEIGHT_MARGIN,
+    height: DM_HEIGHT,
     flexDirection: "row",
     flexWrap: "wrap",
     justifyContent: "center",

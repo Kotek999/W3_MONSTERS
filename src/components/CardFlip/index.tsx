@@ -27,6 +27,7 @@ import { FlexAlignType } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 //@ts-ignore
 import type { NativeStackScreenProps } from "@react-navigation/native-stack";
+import isWEB from "../../common/Resolutions/isWEB";
 
 const CardFlip = (): JSX.Element => {
   const randomCard = CARD_DATA[Math.floor(Math.random() * CARD_DATA.length)];
@@ -145,6 +146,7 @@ const CardFlip = (): JSX.Element => {
   };
 
   interface ImageProps {
+    // width: number;
     flexDirection: "row" | undefined;
     flexWrap: "wrap" | undefined;
     justifyContent: "center" | undefined;
@@ -156,6 +158,7 @@ const CardFlip = (): JSX.Element => {
   }
 
   const image: ImageProps = {
+    // width: DM_WIDTH - 40,
     flexDirection: "row",
     flexWrap: "wrap",
     justifyContent: "center",
@@ -166,7 +169,7 @@ const CardFlip = (): JSX.Element => {
     borderColor: cardData.borderColor,
   };
   return (
-    <SafeAreaView style={{ flex: 1 }}>
+    <SafeAreaView>
       <Wrapper>
         <ImageBackground
           source={cardData.image}
@@ -246,7 +249,12 @@ const CardFlip = (): JSX.Element => {
                   </Text>
                   <View style={styles.iconsContainer}>
                     {typeObj.map((type, key) => {
-                      return <IconPower color={type.iconType} key={key} />;
+                      return (
+                        <IconPower
+                          color={type.iconType}
+                          key={`type-icon-${key}`}
+                        />
+                      );
                     })}
                   </View>
                 </View>
