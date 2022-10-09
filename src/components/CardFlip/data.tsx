@@ -5,7 +5,6 @@ interface CardFlipDataProps {
   card_location: string;
   card_strength: string;
   card_resources: string;
-  card_refresh: string;
 }
 
 export const cardFlipData: CardFlipDataProps = {
@@ -15,5 +14,4 @@ export const cardFlipData: CardFlipDataProps = {
   card_location: "Lokalizacja:",
   card_strength: "Siła:",
   card_resources: "Surowce:",
-  card_refresh: "Odśwież",
 };

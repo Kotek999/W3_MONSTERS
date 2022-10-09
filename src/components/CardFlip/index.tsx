@@ -211,29 +211,6 @@ const CardFlip = (): JSX.Element => {
                   </Text>
                 </View>
               </View>
-              <View style={styles.dividerWithRefresh}>
-                <Divider style={styles.divider} />
-                {refresh && (
-                  <View style={styles.refreshContainer}>
-                    <Text style={styles.refreshTitle}>
-                      {cardFlipData.card_refresh}
-                    </Text>
-                    <View style={styles.refreshIconsContainer}>
-                      <IconButton
-                        icon={"refresh"}
-                        iconColor={MD3Colors.error50}
-                        size={34}
-                        onPress={onPressArea}
-                      />
-                      <IconButton
-                        icon={"cards"}
-                        onPress={onClickGoToRedux}
-                        iconColor={MD3Colors.error80}
-                      />
-                    </View>
-                  </View>
-                )}
-              </View>
               <View style={styles.contentContainer}>
                 <View style={styles.firstContentContainer}>
                   <View style={styles.locationContainer}>
@@ -244,21 +221,22 @@ const CardFlip = (): JSX.Element => {
                   </View>
                 </View>
                 <View style={styles.secondContentContainer}>
-                  <Text style={styles.contentText}>
-                    {cardFlipData.card_strength}
-                  </Text>
-                  <View style={styles.iconsContainer}>
-                    {typeObj.map((type, key) => {
-                      return (
-                        <IconPower
-                          color={type.iconType}
-                          key={`type-icon-${key}`}
-                        />
-                      );
-                    })}
+                  <View style={styles.strengthContainer}>
+                    <Text style={styles.contentText}>
+                      {cardFlipData.card_strength}
+                    </Text>
+                    <View style={styles.iconsContainer}>
+                      {typeObj.map((type, key) => {
+                        return (
+                          <IconPower
+                            color={type.iconType}
+                            key={`type-icon-${key}`}
+                          />
+                        );
+                      })}
+                    </View>
                   </View>
                 </View>
-
                 <View style={styles.thirdContentContainer}>
                   <Text style={styles.contentText}>
                     {cardFlipData.card_resources}
@@ -274,6 +252,26 @@ const CardFlip = (): JSX.Element => {
                       {cardData.loot_third}
                     </Text>
                   </View>
+                </View>
+
+                <View style={styles.refreshWithCards}>
+                  {refresh && (
+                    <View style={styles.refreshContainer}>
+                      <View style={styles.refreshIconsContainer}>
+                        <IconButton
+                          icon={"arrow-bottom-left"}
+                          iconColor={MD3Colors.error50}
+                          size={34}
+                          onPress={onPressArea}
+                        />
+                        <IconButton
+                          icon={"cards"}
+                          onPress={onClickGoToRedux}
+                          iconColor={MD3Colors.error80}
+                        />
+                      </View>
+                    </View>
+                  )}
                 </View>
               </View>
             </View>
@@ -307,12 +305,11 @@ const styles = StyleSheet.create({
     alignItems: "flex-start",
   },
   imageFlipedContainer: {
-    flex: 1,
+    top: 50,
     width: DM_WIDTH_MARGIN,
-    height: DM_HEIGHT_MARGIN,
     flexDirection: "row",
     flexWrap: "wrap",
-    justifyContent: "flex-start",
+    justifyContent: isWEB() ? "center" : "flex-start",
     alignItems: "center",
   },
   flipedCard: {
@@ -327,30 +324,20 @@ const styles = StyleSheet.create({
     margin: "0%",
   },
   refreshContainer: {
-    top: "80%",
+    width: isWEB() ? "25%" : "100%",
+    height: 80,
     flexDirection: "row",
     flexWrap: "wrap",
-    alignItems: "center",
-    alignContent: "flex-end",
-  },
-  refreshIconsContainer: {
-    width: "70%",
-    flexDirection: "row",
-    flexWrap: "wrap",
-    justifyContent: "space-between",
     alignItems: "center",
     alignContent: "center",
   },
-  refreshTitle: {
-    marginTop: 16,
-    color: "white",
-    fontSize: 20,
-  },
-  divider: {
-    top: 20,
-    backgroundColor: "#90a4ae",
-    width: "90%",
-    height: 1,
+  refreshIconsContainer: {
+    width: "100%",
+    flexDirection: "row",
+    flexWrap: "nowrap",
+    justifyContent: "space-between",
+    alignItems: "center",
+    alignContent: "center",
   },
   avatarWithText: {
     flexDirection: "row",
@@ -375,9 +362,13 @@ const styles = StyleSheet.create({
     fontSize: 18,
     top: 10,
   },
-  dividerWithRefresh: {
+  refreshWithCards: {
+    top: 100,
     width: "100%",
     height: 1,
+    flexDirection: "row",
+    justifyContent: "center",
+    alignContent: "center",
   },
   contentContainer: {
     width: "90%",
@@ -394,10 +385,10 @@ const styles = StyleSheet.create({
     alignContent: "center",
   },
   locationContainer: {
-    width: "100%",
+    width: isWEB() ? "150%" : "100%",
     flexDirection: "row",
     justifyContent: "space-between",
-    alignItems: "flex-start",
+    alignItems: "center",
     alignContent: "center",
   },
   contentText: {
@@ -405,12 +396,18 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   secondContentContainer: {
-    width: "100%",
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+    alignContent: "center",
+    top: 20,
+  },
+  strengthContainer: {
+    width: isWEB() ? "160%" : "100%",
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
     alignContent: "center",
-    top: 20,
   },
   iconsContainer: {
     width: "115%",
