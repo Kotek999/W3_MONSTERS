@@ -9,13 +9,24 @@ const TestCard = (props: any) => {
     props.callToData();
   }, []);
 
+  let date: any = new Date();
+
+  let day = date.getDate();
+  let month = date.getMonth() + 1;
+  let year = date.getFullYear();
+
+  const currentTime = date.toLocaleTimeString();
+
+  date = `${day}.${month}.${year}`;
+
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <Text style={styles.text}>{props.pageData && props.pageData.title}</Text>
       <Text style={styles.text}>
         {props.pageData && props.pageData.content}
       </Text>
-      <Text style={styles.text}>{props.pageData && props.pageData.date}</Text>
+      <Text style={styles.date}>Data: {date}</Text>
+      <Text style={styles.time}>Czas: {currentTime}</Text>
     </SafeAreaView>
   );
 };
@@ -33,6 +44,22 @@ const styles = StyleSheet.create({
     fontSize: 20,
     letterSpacing: 1,
     color: "black",
+    padding: 0,
+    textAlign: "center",
+  },
+  date: {
+    paddingTop: 80,
+    fontSize: 20,
+    letterSpacing: 1,
+    color: "red",
+    padding: 0,
+    textAlign: "center",
+  },
+  time: {
+    paddingTop: 40,
+    fontSize: 20,
+    letterSpacing: 1,
+    color: "green",
     padding: 0,
     textAlign: "center",
   },

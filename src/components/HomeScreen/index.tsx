@@ -14,11 +14,11 @@ export default function HomeScreen({ navigation }: NativeStackScreenProps) {
   const check = "Potwierdź swój wiek!";
 
   const checkAge = () => {
-    if (checked) {
-      return navigation.navigate("Information");
-    } else {
-      isWEB() ? alert(check) : ToastAndroid.show(check, ToastAndroid.CENTER);
-    }
+    checked
+      ? navigation.navigate("Information")
+      : isWEB()
+      ? alert(check)
+      : ToastAndroid.show(check, ToastAndroid.CENTER);
   };
 
   return (

@@ -265,7 +265,9 @@ const CardFlip = (): JSX.Element => {
                           onPress={onPressArea}
                         />
                         <IconButton
-                          icon={"cards"}
+                          // icon={"cards"}
+                          icon={"heart"}
+                          size={30}
                           onPress={onClickGoToRedux}
                           iconColor={MD3Colors.error80}
                         />
